@@ -12,7 +12,7 @@ const Dashboard = () => {
     }, [])
     return (
         <div>
-            <h6>Dashbord</h6>
+            <h3>Dashbord</h3>
             {
                 students.map((std, index) => {
                     return !std.isClassAssign && <div key={index}>{std.name} applied for {std.course} course</div>
