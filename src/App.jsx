@@ -1,26 +1,29 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { Routes, Route, Link } from 'react-router-dom'
 import './App.css';
+import Home from './components/home';
+import Student from './components/student';
+import Attendance from './components/attendance';
 
 const App = () => {
-  const [students, setStudents] = useState([])
 
-  useEffect(() => {
-    axios.get('http://localhost:8080/students')
-      .then(res => setStudents(res.data.data))
-    console.log(students);
-  }, [])
 
   return (
     <div className="App">
-      <div className="App-header">
+
+
+      <div className="App-container">
         <h3>Attendance Management System</h3>
-        <h6>Dashbord</h6>
-        {
-          students.map((std, index) => {
-            return !std.isClassAssign && <div key={index}>{std.name} applied for {std.course} course</div>
-          })
-        }
+
+        <ul>
+          <li><Link to={'/'} >Home</Link></li>
+          <li><Link to={'/student'} >Student</Link></li>
+          <li><Link to={'attendance'} >Attendance</Link></li>
+        </ul>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/student' element={<Student />} />
+          <Route path='/attendance' element={<Attendance />} />
+        </Routes>
       </div>
     </div>
   );
