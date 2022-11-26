@@ -4,13 +4,12 @@ import Home from './components/home';
 import Student from './components/student';
 import Attendance from './components/attendance';
 
-const App = () => {
+let api = 'http://localhost:8080'
 
+const App = () => {
 
   return (
     <div className="App">
-
-
       <div className="App-container">
         <h3>Attendance Management System</h3>
 
@@ -20,9 +19,9 @@ const App = () => {
           <li><Link to={'attendance'} >Attendance</Link></li>
         </ul>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/student' element={<Student />} />
-          <Route path='/attendance' element={<Attendance />} />
+          <Route path='/' element={<Home api={api} />} />
+          <Route path='/student' element={<Student api={api} />} />
+          <Route path='/attendance' element={<Attendance api={api} />} />
         </Routes>
       </div>
     </div>
