@@ -27,7 +27,7 @@ const Attendance = ({ api }) => {
             selected_date
         })
             .then(res => console.log(res))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err))        
     }
 
     const loadCourses = (e) => {
