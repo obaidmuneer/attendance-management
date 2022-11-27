@@ -1,9 +1,9 @@
 import Dashboard from "../dasboard"
 
-const Home = () => {
+const Home = ({ api }) => {
     return (
         <div>
-            <Dashboard />
+            <Dashboard api={api} />
         </div>
     )
 }
