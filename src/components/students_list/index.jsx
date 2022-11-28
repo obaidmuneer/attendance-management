@@ -14,6 +14,8 @@ const StudentsList = ({ students }) => {
                                     <td>{Object.keys(students[0])[4]}</td>
                                     {/* <td>{Object.keys(students[0])[5]}</td> */}
                                     <td>{Object.keys(students[0])[6]}</td>
+                                    <td>{Object.keys(students[0])[10]}</td>
+
                                 </tr>
                             }
                         </thead>
@@ -27,6 +29,7 @@ const StudentsList = ({ students }) => {
                                         <td>{std.contact}</td>
                                         {/* <td>{std.cnic}</td> */}
                                         <td>{std.course}</td>
+                                        <td><img src={std.picture?.link} alt="" width={50}/></td>
                                     </tr>
                                 })
                             }
