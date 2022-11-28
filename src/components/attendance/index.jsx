@@ -50,6 +50,7 @@ const Attendance = ({ api }) => {
             <span>Load Students</span>
             <select defaultValue={"course"} onChange={loadCourses}>
                 <option value="course" disabled >Select Course</option>
+                <option value="chatbot">Chatbot</option>
                 <option value="web">Web</option>
                 <option value="graphic">Graphic</option>
             </select>
