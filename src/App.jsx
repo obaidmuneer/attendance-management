@@ -5,7 +5,12 @@ import Student from './components/student';
 import Attendance from './components/attendance';
 import AddStudent from './components/add_student';
 
-let api = 'http://localhost:8080'
+let api = ''
+if (window.location.protocol === 'http:') {
+  api = 'http://localhost:8080'
+} else {
+  api = 'https://helpful-earmuffs-cod.cyclic.app'
+}
 
 const App = () => {
 
