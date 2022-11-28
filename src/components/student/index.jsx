@@ -6,7 +6,10 @@ const Student = ({ api }) => {
   const [students, setStudents] = useState([])
   useEffect(() => {
     axios.get(`${api}/students`)
-      .then(res => setStudents(res.data.data))
+      .then(res => {
+        console.log(res.data.data);
+        setStudents(res.data.data)
+      })
       .catch(err => setStudents(null))
 
     // eslint-disable-next-line
