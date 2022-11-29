@@ -15,8 +15,6 @@ const Attendance = ({ api }) => {
     const [classData, setClassData] = useState([])
     const [selectedCourse, setSelectedCourse] = useState('')
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.get(`${api}/student/${roll}`)
@@ -63,8 +61,6 @@ const Attendance = ({ api }) => {
             })
             .catch(err => console.log(err))
     }
-
-
 
     return (
         <div>
