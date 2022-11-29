@@ -14,7 +14,7 @@ const StudentsList = ({ students }) => {
                                     <td>{Object.keys(students[0])[4]}</td>
                                     {/* <td>{Object.keys(students[0])[5]}</td> */}
                                     <td>{Object.keys(students[0])[6]}</td>
-                                    <td>{Object.keys(students[0])[10]}</td>
+                                    {/* <td>{Object.keys(students[0])[10]}</td> */}
 
                                 </tr>
                             }

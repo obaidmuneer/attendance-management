@@ -10,6 +10,12 @@ const Attendance = ({ api }) => {
     const [selected_date, setSelected_date] = useState('')
     const [marked_attendance, setMarked_attendance] = useState('')
     const [loadedAttend, setLoadedAttend] = useState([])
+    const [selectedBatch, setSelectedBatch] = useState('')
+    const [selectedSec, setSelectedSec] = useState('')
+    const [classData, setClassData] = useState([])
+    const [selectedCourse, setSelectedCourse] = useState('')
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -27,15 +33,21 @@ const Attendance = ({ api }) => {
             selected_date
         })
             .then(res => console.log(res))
-            .catch(err => console.log(err))        
+            .catch(err => console.log(err))
     }
 
-    const loadCourses = (e) => {
+    const loadStudents = () => {
         // console.log(e.target.value);
-        axios.get(`${api}/class/${e.target.value}`)
-            .then(res => setStudents(res.data.data.students))
+        axios.post(`${api}/class/${selectedCourse}`, {
+            batch: selectedBatch,
+            section: selectedSec
+        })
+            .then(res => {
+                // console.log(res.data)
+                setStudents(res.data.students)
+            })
             .catch(err => setStudents(null))
-        console.log(students);
+        // console.log(students);
     }
 
     const loadAttendance = () => {
@@ -44,16 +56,54 @@ const Attendance = ({ api }) => {
             .catch(err => console.log(err))
     }
 
+    const getClass = () => {
+        axios.get(`${api}/get_class/${selectedCourse}`)
+            .then(res => {
+                setClassData(res.data.data)
+            })
+            .catch(err => console.log(err))
+    }
+
+
+
     return (
         <div>
             <h3>Attendance</h3>
             <span>Load Students</span>
-            <select defaultValue={"course"} onChange={loadCourses}>
+            <select defaultValue={"course"} onChange={(e) => setSelectedCourse(e.target.value)}>
                 <option value="course" disabled >Select Course</option>
                 <option value="chatbot">Chatbot</option>
                 <option value="web">Web</option>
                 <option value="graphic">Graphic</option>
             </select>
+
+
+            <div>
+                {
+                    selectedCourse &&
+                    <select defaultValue={"batchno"} onClick={getClass} onChange={(e) => setSelectedBatch(e.target.value)}>
+                        <option value="batchno" disabled >Select batch no..</option>
+                        {
+                            classData.map((eachClass, index) => {
+                                return <option key={index} value={eachClass.batch}>{eachClass.batch}</option>
+                            })
+                        }
+                    </select>
+                }
+                {
+                    selectedBatch &&
+                    <select defaultValue={"section_name"} onChange={(e) => setSelectedSec(e.target.value)}>
+                        <option value="section_name" disabled>select section ...</option>
+                        {
+                            classData.map((eachClass, index) => {
+                                return <option key={index} value={eachClass.section}>{eachClass.section}</option>
+                            })
+                        }
+                    </select>
+                }
+                {selectedSec && <button onClick={loadStudents} >Load Students</button>}
+            </div>
+
             <StudentsList students={students} />
 
             <div>
