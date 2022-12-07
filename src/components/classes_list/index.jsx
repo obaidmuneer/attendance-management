@@ -2,16 +2,18 @@ import axios from "axios"
 import { useState } from "react"
 
 
-const ClassesList = ({ api, std, deLoad }) => {
+const ClassesList = ({ api, std, deLoad, data ,uniqKey }) => {
     const [classData, setClassData] = useState([])
     const [selectedBatch, setSelectedBatch] = useState('')
+    const [batchList, setBatchList] = useState([])
 
     const loadData = (e) => {
         deLoad(
-            {
+            [...data, {
                 selectedBatch,
-                selectedSec : e.target.value
-            }
+                selectedSec: e.target.value,
+                uniqKey
+            }]
         )
     }
 
@@ -19,16 +21,28 @@ const ClassesList = ({ api, std, deLoad }) => {
         axios.get(`${api}/get_class/${std.course}`)
             .then(res => {
                 setClassData(res.data.data)
+                uniq(res.data.data)
             })
             .catch(err => console.log(err))
     }
+
+    const uniq = (data) => {
+        const a = data.map((item) => {
+            return item.batch
+        })
+        const uniqArr = [...new Set(a)];
+        setBatchList(uniqArr)
+        // api could be added 
+    }
     return (
-        <div>
+        <span>
+            {/* <button onClick={uniq} >Click me</button> */}
+
             <select defaultValue={"batchno"} onClick={() => getClass(std)} onChange={(e) => setSelectedBatch(e.target.value)}>
                 <option value="batchno" disabled >Select batch no..</option>
                 {
-                    std.course === classData[0]?.course.toLowerCase() && classData.map((eachClass, index) => {
-                        return <option key={index} value={eachClass.batch}>{eachClass.batch}</option>
+                    std.course === classData[0]?.course.toLowerCase() && batchList.map((eachClass, index) => {
+                        return <option key={index} value={eachClass}>{eachClass}</option>
                     })
                 }
             </select>
@@ -39,12 +53,12 @@ const ClassesList = ({ api, std, deLoad }) => {
                     <option value="section_name" disabled>select section ...</option>
                     {
                         classData.map((eachClass, index) => {
-                            return <option key={index} value={eachClass.section}>{eachClass.section}</option>
+                            return eachClass.batch === selectedBatch && <option key={index} value={eachClass.section}>{eachClass.section}</option>
                         })
                     }
                 </select>
             }
-        </div>
+        </span>
     )
 }
 
