@@ -33,13 +33,13 @@
     padding: 0;
 }
 
-input {
+.roll {
     border-style: none;
     background: transparent;
     outline: none;
   }
   
-  button {
+  .webflow-style-input > button {
     padding: 0;
     background: none;
     border: none;
