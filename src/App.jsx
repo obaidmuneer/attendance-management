@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import './App.css';
 import Home from './components/home';
 import Student from './components/student';
@@ -19,16 +19,10 @@ const App = () => {
   return (
     <div className="App">
       <div className="App-container">
-        {/* <h3>Attendance Management System</h3> */}
-
-        {/* <ul>
-          <li><Link to={'/'} >Home</Link></li>
-          <li><Link to={'student'} >Student</Link></li>
-          <li><Link to={'attendance'} >Attendance</Link></li>
-          <li><Link to={'add_class'} >Add Class</Link></li>
-        </ul> */}
+        
         <Routes>
           <Route path='/' element={<QrCode api={api} />} />
+          <Route path='home' element={<Home api={api} />} />
           <Route path='student' element={<Student api={api} />} />
           <Route path='add_student' element={<AddStudent api={api} />} />
           <Route path='attendance' element={<Attendance api={api} />} />
