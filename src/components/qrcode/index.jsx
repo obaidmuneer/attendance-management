@@ -54,7 +54,7 @@ const Attendance = ({ api }) => {
 
             <form style={flag ? {opacity: 0} : {opacity: 1}} onSubmit={handleSubmit}>
                 <div className="webflow-style-input">
-                    <input id="roll_num" autoComplete="off" type="text"
+                    <input className="roll" id="roll_num" autoComplete="off" type="text"
                         placeholder="Enter Roll Number!" onChange={e => {
                             setRoll(e.target.value)
                             setFlag(false)
@@ -62,7 +62,7 @@ const Attendance = ({ api }) => {
                                 setFlag(true)
                             }, 2000);
                         }} value={roll} />
-                    <button type="submit"><i className="icon ion-android-arrow-forward"></i>{'>'}</button>
+                    <button type="submit"><i className="roll_btn icon ion-android-arrow-forward"></i>{'>'}</button>
                 </div>
             </form>
 
@@ -85,6 +85,7 @@ const Attendance = ({ api }) => {
                 className="qrcode"
                 onResult={(result, error) => {
                     if (!!result) {
+                        console.log(result.text);
                         new Audio(sucessAudio).play();
                         setRoll(+result?.text)
                         handleAttendance(+result?.text)
