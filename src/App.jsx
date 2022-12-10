@@ -19,7 +19,7 @@ const App = () => {
   return (
     <div className="App">
       <div className="App-container">
-        
+      
         <Routes>
           <Route path='/' element={<QrCode api={api} />} />
           <Route path='home' element={<Home api={api} />} />
