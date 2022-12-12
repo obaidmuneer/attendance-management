@@ -1,6 +1,7 @@
 import StudentsList from '../students_list'
 import axios from "axios"
 import { useEffect, useState } from "react"
+import StudentTable from '../student_table'
 
 const Student = ({ api }) => {
   const [students, setStudents] = useState([])
@@ -17,7 +18,8 @@ const Student = ({ api }) => {
 
   return (
     <div>
-      <StudentsList students={students} />
+      <StudentTable students={students} />
+      {/* <StudentsList students={students} /> */}
     </div>
   )
 }
