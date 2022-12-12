@@ -2,6 +2,7 @@
 const StudentsList = ({ students }) => {
     return (
         <div>
+            <h3>Student List</h3>
             {
                 students ?
                     <table>

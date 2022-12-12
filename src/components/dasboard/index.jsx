@@ -37,7 +37,6 @@ const Dashboard = ({ api }) => {
     return (
         <div>
             <h3>Dashbord</h3>
-            <Link to={'add_student'} >Add Student</Link>
             {
                 students.map((std, index) => {
                     return !std.isClassAssign && <div key={index}>{std.name} applied for {std.course} course

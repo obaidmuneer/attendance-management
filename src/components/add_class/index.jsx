@@ -21,6 +21,7 @@ const AddClass = ({ api }) => {
     }
     return (
         <div>
+            <h3>Add Class</h3>
             <form onSubmit={handleSubmit} >
                 <span>Teacher :</span><input type="text" name="teacher" /> <br />
                 <span>Class Timing :</span><input type="text" name="classTiming" /> <br />
