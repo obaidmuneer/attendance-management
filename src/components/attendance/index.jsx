@@ -2,6 +2,10 @@ import axios from "axios";
 import moment from "moment";
 import { useState } from "react";
 import StudentsList from "../students_list";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import StudentCard from "../student_card";
 
 const Attendance = ({ api }) => {
   const [students, setStudents] = useState([]);
@@ -74,8 +78,8 @@ const Attendance = ({ api }) => {
 
   return (
     <div>
-      <h3>Attendance</h3>
-      <span>Load Students</span>
+      <h1>Attendance Summary Page</h1>
+      {/* <span>Load Students</span>
       <select
         defaultValue={"course"}
         onChange={(e) => setSelectedCourse(e.target.value)}
@@ -127,25 +131,40 @@ const Attendance = ({ api }) => {
         {selectedSec && <button onClick={loadStudents}>Load Students</button>}
       </div>
 
-      <StudentsList students={students} />
+      <StudentsList students={students} /> */}
+
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          display: "flex",
+          alignItems: "center",
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <TextField
+          id="standard-number"
+          label="Please enter a roll number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="standard"
+          onChange={(e) => setRoll(+e.target.value)}
+          value={roll}
+        />
+        <Button type="submit" variant="contained" size="medium">
+          Submit
+        </Button>
+      </Box>
 
       <div>
-        <h2>Mark Attendance</h2>
-        <form onSubmit={handleSubmit}>
-          <input type="number" onChange={(e) => setRoll(+e.target.value)} />
-          <input type="submit"></input>
-        </form>
-
         {student && student.isClassAssign ? (
           <div>
-            <ul>
-              <li>{moment(Date.now()).format("MMM Do YY")}</li>
-              <li>
-                {student.name} {student.fathername}
-              </li>
-              <li>{student.course}</li>
-            </ul>
-            <form onSubmit={handleAttendance}>
+            <StudentCard student={student} />
+            {/* <form onSubmit={handleAttendance}>
               <span>Select Date</span>
               <input
                 type="date"
@@ -167,7 +186,7 @@ const Attendance = ({ api }) => {
                 <option value="leave">Leave</option>
               </select>
               <input type="submit"></input>
-            </form>
+            </form> */}
           </div>
         ) : (
           <div>
@@ -179,7 +198,7 @@ const Attendance = ({ api }) => {
       <div>
         {student && (
           <div>
-            <h2>Attendance Summary</h2>
+            <h2>Student's Attendance Detail</h2>
             {/* <button onClick={loadAttendance}>Load Attendance</button> */}
             <ul>
               {loadedAttend.map((eachAttend, index) => {
