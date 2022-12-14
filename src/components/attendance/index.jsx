@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import StudentCard from "../student_card";
+import AttendanceTable from "../attendance_table";
 
 const Attendance = ({ api }) => {
   const [students, setStudents] = useState([]);
@@ -77,7 +78,7 @@ const Attendance = ({ api }) => {
   };
 
   return (
-    <div>
+    <div style={{ padding: 5 }}>
       <h1>Attendance Summary Page</h1>
       {/* <span>Load Students</span>
       <select
@@ -133,37 +134,52 @@ const Attendance = ({ api }) => {
 
       <StudentsList students={students} /> */}
 
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
-          display: "flex",
-          alignItems: "center",
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
-        <TextField
-          id="standard-number"
-          label="Please enter a roll number"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
+      <div style={{
+        display: "flex",
+        // flexDirection: "row",
+        justifyContent: "space-around",
+        // alignItems: "center",
+        // marginTop: "20px",
+      }} >
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "25ch" },
+            display: "flex",
+            alignItems: "center",
+            mr:1
           }}
-          variant="standard"
-          onChange={(e) => setRoll(+e.target.value)}
-          value={roll}
-        />
-        <Button type="submit" variant="contained" size="medium">
-          Submit
-        </Button>
-      </Box>
+          // noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <TextField
+            id="standard-number"
+            label="Please enter a roll number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            onChange={(e) => setRoll(+e.target.value)}
+            value={roll}
+          />
+          <Button type="submit" variant="contained" size="medium">
+            Submit
+          </Button>
+        </Box>
 
-      <div>
-        {student && student.isClassAssign ? (
+        {student && student.isClassAssign && (
           <div>
             <StudentCard student={student} />
+          </div>
+        )}
+      </div>
+
+      {/* <div> */}
+        {/* {student && student.isClassAssign && ( */}
+           {/* <div> */}
+            {/* <StudentCard student={student} /> */}
             {/* <form onSubmit={handleAttendance}>
               <span>Select Date</span>
               <input
@@ -187,20 +203,17 @@ const Attendance = ({ api }) => {
               </select>
               <input type="submit"></input>
             </form> */}
-          </div>
-        ) : (
-          <div>
-            <p>sad ={">"} :(</p>
-          </div>
-        )}
-      </div>
+          {/* </div> */}
+        {/* )} */}
+      {/* </div> */}
 
       <div>
         {student && (
           <div>
             <h2>Student's Attendance Detail</h2>
             {/* <button onClick={loadAttendance}>Load Attendance</button> */}
-            <ul>
+            <AttendanceTable attendance={loadedAttend} />
+            {/* <ul>
               {loadedAttend.map((eachAttend, index) => {
                 return (
                   <li key={index}>
@@ -209,7 +222,7 @@ const Attendance = ({ api }) => {
                   </li>
                 );
               })}
-            </ul>
+            </ul> */}
           </div>
         )}
       </div>
