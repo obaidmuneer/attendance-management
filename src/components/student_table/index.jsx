@@ -14,14 +14,12 @@ const columns = [
   { id: "roll", label: "Roll Number", minWidth: 170 },
   { id: "contact", label: "Phone Number", minWidth: 170 },
   { id: "course", label: "Course", minWidth: 170 },
-//   { id: "picture.link", label: "Photo", minWidth: 170 },
+  // { id: "picture", label: "Photo", minWidth: 170 },
 ];
-
 
 export default function StudentTable({ students }) {
   const rows = students;
 
-  console.log(students);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -54,9 +52,9 @@ export default function StudentTable({ students }) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
