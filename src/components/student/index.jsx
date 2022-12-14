@@ -1,4 +1,3 @@
-import StudentsList from '../students_list'
 import axios from "axios"
 import { useEffect, useState } from "react"
 import StudentTable from '../student_table'
@@ -8,7 +7,7 @@ const Student = ({ api }) => {
   useEffect(() => {
     axios.get(`${api}/students`)
       .then(res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setStudents(res.data.data)
       })
       .catch(err => setStudents(null))
@@ -19,7 +18,6 @@ const Student = ({ api }) => {
   return (
     <div>
       <StudentTable students={students} />
-      {/* <StudentsList students={students} /> */}
     </div>
   )
 }
