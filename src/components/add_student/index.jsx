@@ -1,12 +1,16 @@
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import ModifiedTextField from "../textfield";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import Stack from "@mui/material/Stack";
 
 const validationSchema = yup.object({
   name: yup
@@ -17,16 +21,13 @@ const validationSchema = yup.object({
     .required("Father name is required i.e Muneer Hussain"),
   contact: yup.string().required("Contact no is required i.e +923133853852"),
   cnic: yup.string().required("CNIC no is required i.e 98754-59887654-5"),
-  course: yup.string().required("Course name is required i.e WEB, AI-Chatbot"),
+  course: yup
+    .string()
+    .required("Course name is required i.e Select WEB, AI-Chatbot"),
+  pic: yup.mixed(),
 });
 
 const AddStudent = ({ api }) => {
-  const [name, setName] = useState("");
-  const [fathername, setFathername] = useState("");
-  const [contact, setContact] = useState("");
-  const [cnic, setCnic] = useState("");
-  const [course, setCourse] = useState("");
-  const [image, setImage] = useState({ preview: "", data: "" });
 
   const formik = useFormik({
     initialValues: {
@@ -35,53 +36,54 @@ const AddStudent = ({ api }) => {
       contact: "",
       cnic: "",
       course: "",
+      pic: null,
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, actions) => {
       console.log("Submitted", values);
+      handleSubmit();
+      actions.resetForm({
+        values:{
+          name: "",
+          fathername: "",
+          contact: "",
+          cnic: "",
+          course: formik.values.course,
+          pic: null,
+        }
+      });
     },
   });
 
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    let formData = new FormData();
-    formData.append("pic", image.data);
-    // console.log(formData);
+  const handleSubmit = async () => {
+    const { name, fathername, contact, cnic, course , pic } = formik.values;
+    console.log(Boolean(pic));
 
     const result = await axios.post(`${api}/students`, {
       name,
       fathername,
       contact,
       cnic,
-      course, //make the list to be fethced from server
+      course, 
     });
     console.log(result.data.data.roll);
 
-    axios
-      .post(`${api}/students/img/${result.data.data.roll}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (Boolean(pic)) {
+      let formData = new FormData();
+      formData.append("pic", pic);
+      // console.log(formData);
 
-    navigate("/");
-  };
-
-  const handleFileChange = (e) => {
-    const img = {
-      preview: URL.createObjectURL(e.target.files[0]),
-      data: e.target.files[0],
-    };
-    setImage(img);
+      const imgResult = await axios.post(
+        `${api}/students/img/${result.data.data.roll}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(imgResult.data);
+    }
   };
 
   return (
@@ -93,21 +95,6 @@ const AddStudent = ({ api }) => {
       }}
     >
       <Typography variant="h4">Add Student</Typography>
-      {/* <form encType="multipart/form-data" onSubmit={handleSubmit}>
-                <span>Name :</span> <input type="text" onChange={(e) => setName(e.target.value)} value={name} /> <br />
-                <span>Father Name :</span> <input type="text" onChange={(e) => setFathername(e.target.value)} value={fathername} /> <br />
-                <span>Contact No:</span> <input type="number" onChange={(e) => setContact(+e.target.value)} value={contact} /> <br />
-                <span>Cnic: </span><input type="number" onChange={(e) => setCnic(e.target.value)} value={cnic} /> <br />
-                <span>Course :</span>
-                <select defaultValue={"course"} onChange={(e) => setCourse(e.target.value)}>
-                    <option value="course" disabled >Select Course</option>
-                    <option value="chatbot">Chatbot</option>
-                    <option value="web">WEB</option>
-                    <option value="graphic">Graphic</option>
-                </select> <br />
-                <input type="file" name="pic" onChange={handleFileChange} />
-                <input type="submit" value="Add Student" />
-            </form> */}
       <Box
         component="form"
         encType="multipart/form-data"
@@ -122,15 +109,71 @@ const AddStudent = ({ api }) => {
         autoComplete="off"
         onSubmit={formik.handleSubmit}
       >
-        <ModifiedTextField str={"name"} formik={formik} />
-        <ModifiedTextField str={"fathername"} formik={formik} />
-        <ModifiedTextField str={"contact"} formik={formik} />
-        <ModifiedTextField str={"cnic"} formik={formik} />
-        <ModifiedTextField str={"course"} formik={formik} />
+        <ModifiedTextField
+          str={"name"}
+          placeHelper="Enter Student's Name"
+          formik={formik}
+        />
+        <ModifiedTextField
+          str={"fathername"}
+          placeHelper="Enter Father Name"
+          formik={formik}
+        />
+        <ModifiedTextField
+          str={"contact"}
+          placeHelper="Enter Phone no i.e 031212345678"
+          formik={formik}
+          type={"number"}
+        />
+        <ModifiedTextField
+          str={"cnic"}
+          placeHelper={"Enter CNIC no xxxxx-xxxxxxx-x"}
+          formik={formik}
+          type={"number"}
+        />
+
         {/* {"course should be a list to be fethced from server"} */}
+
+        <Stack direction="row" alignItems="center" spacing={4}>
+          <FormControl
+          
+            sx={{ width: "20ch" }}
+            error={formik.touched.course && Boolean(formik.errors.course)}
+          >
+            <InputLabel id="course">Select Course</InputLabel>
+            <Select
+              name="course"
+              labelId="course"
+              id="course"
+              value={formik.values.course}
+              label="Select Course"
+              onChange={formik.handleChange}
+            >
+              <MenuItem value={"web"}>Web</MenuItem>
+              <MenuItem value={"graphic"}>Graphic</MenuItem>
+              <MenuItem value={"ai-chatbot"}>AI Chatbot</MenuItem>
+            </Select>
+            <FormHelperText>
+              {formik.touched.course && formik.errors.course}
+            </FormHelperText>
+          </FormControl>
+
+          <Button variant="contained" component="label">
+            Upload Image
+            <input
+              id="pic"
+              name="pic"
+              type="file"
+              hidden
+              onChange={(event) => {
+                formik.setFieldValue("pic", event.currentTarget.files[0]);
+              }}
+            />
+          </Button>
+        </Stack>
         <Button
           color="primary"
-          sx={{ justifyContent: "center" }}
+          sx={{ justifyContent: "center", mt: 1 }}
           variant="contained"
           type="submit"
         >

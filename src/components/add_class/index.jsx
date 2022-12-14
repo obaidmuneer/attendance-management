@@ -34,85 +34,97 @@ const AddClass = ({ api }) => {
       classSchedule: "",
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, actions) => {
       console.log("Submitted", values);
+      handleSubmit();
+      actions.resetForm({
+        values: {
+          teacher: "",
+          batch: formik.values.batch,
+          course: formik.values.course,
+          section: "",
+          classTiming: "",
+          classSchedule: formik.values.classSchedule,
+        },
+      });
     },
   });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // just checking i can also do it this way lol
-    let { teacher, classTiming, classSchedule, section, course, batch } =
-      e.target;
-    let data = {
-      teacher: teacher.value,
-      classTiming: classTiming.value,
-      classSchedule: classSchedule.value,
-      section: section.value,
-      course: course.value,
-      batch: batch.value,
-    };
-
-    axios
-      .post(`${api}/add_class`, data)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+  const handleSubmit = async () => {
+    try {
+      let { teacher, classTiming, classSchedule, section, course, batch } =
+        formik.values;
+      let data = {
+        teacher,
+        classTiming,
+        classSchedule,
+        section,
+        course,
+        batch,
+      };
+      const result = await axios.post(`${api}/add_class`, data);
+      console.log(result.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        // justifyContent: 'center',
         alignItems: "center",
       }}
     >
       <h3>Add Class</h3>
-      {/* <form onSubmit={handleSubmit}>
-        <span>Teacher :</span>
-        <input type="text" name="teacher" /> <br />
-        <span>Class Timing :</span>
-        <input type="text" name="classTiming" /> <br />
-        <span>Class Schedule :</span>
-        <input type="text" name="classSchedule" />
-        <br />
-        <span>Section :</span>
-        <input type="text" name="section" />
-        <br />
-        <span>Course :</span>
-        <input type="text" name="course" />
-        <br />
-        <span>Batch :</span>
-        <input type="text" name="batch" />
-        <br />
-        <input type="submit" value="Submit" />
-      </form> */}
-
       <div>
-        {/* <form onSubmit={formik.handleSubmit}> */}
         <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": {  width: "40ch" },
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          // alignItems: "center",
-        }}
-        // noValidate
-        autoComplete="off"
-        onSubmit={formik.handleSubmit}
-      >
-          <ModifiedTextField str={"teacher"} formik={formik} />
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { width: "40ch" },
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            // alignItems: "center",
+          }}
+          // noValidate
+          autoComplete="off"
+          onSubmit={formik.handleSubmit}
+        >
+          <ModifiedTextField
+            str={"teacher"}
+            placeHelper={"Enter Teacher's Name"}
+            formik={formik}
+          />
           <br />
-          <ModifiedTextField str={"course"} formik={formik} />
+          <ModifiedTextField
+            str={"course"}
+            placeHelper={"Enter Course Name i.e WEB"}
+            formik={formik}
+          />
           <br />
-          <ModifiedTextField str={"batch"} formik={formik} />
+          <ModifiedTextField
+            str={"batch"}
+            placeHelper={"Enter Batch no i.e 2, 3"}
+            formik={formik}
+          />
           <br />
-          <ModifiedTextField str={"section"} formik={formik} />
+          <ModifiedTextField
+            str={"section"}
+            placeHelper={"Enter Section Name i.e A, B"}
+            formik={formik}
+          />
           <br />
-          <ModifiedTextField str={"classTiming"} formik={formik} />
+          <ModifiedTextField
+            str={"classTiming"}
+            placeHelper={"9pm to 10pm or 9:00PM to 10:00PM"}
+            formik={formik}
+          />
           <br />
-          <ModifiedTextField str={"classSchedule"} formik={formik} />
+          <ModifiedTextField
+            str={"classSchedule"}
+            placeHelper={"Classes Day i.e MWF , TTS , Sunday"}
+            formik={formik}
+          />
           <br />
           <Button
             color="primary"
@@ -122,8 +134,7 @@ const AddClass = ({ api }) => {
           >
             Submit
           </Button>
-          </Box>
-        {/* </form> */}
+        </Box>
       </div>
     </div>
   );
