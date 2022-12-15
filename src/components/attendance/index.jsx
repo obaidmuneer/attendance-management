@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import StudentCard from "../student_card";
 import AttendanceTable from "../attendance_table";
+import Loader from "../loader";
 
 const Attendance = ({ api }) => {
   const [students, setStudents] = useState([]);
@@ -19,16 +20,21 @@ const Attendance = ({ api }) => {
   const [selectedSec, setSelectedSec] = useState("");
   const [classData, setClassData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     axios
       .get(`${api}/student/${roll}`)
       .then((res) => {
         setStudent(res.data.student);
         loadAttendance(res.data.student.roll);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setLoading(false);
+        console.error(err);
+      });
     console.log(student);
   };
   const handleAttendance = (e) => {
@@ -64,8 +70,14 @@ const Attendance = ({ api }) => {
   const loadAttendance = (roll) => {
     axios
       .get(`${api}/marked_attendance/${roll || student.roll}`)
-      .then((res) => setLoadedAttend(res.data.attendance))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        setLoading(false);
+        setLoadedAttend(res.data.attendance);
+      })
+      .catch((err) => {
+        console.log(err)
+        setLoading(false);
+      });
   };
 
   const getClass = () => {
@@ -134,20 +146,22 @@ const Attendance = ({ api }) => {
 
       <StudentsList students={students} /> */}
 
-      <div style={{
-        display: "flex",
-        // flexDirection: "row",
-        justifyContent: "space-around",
-        // alignItems: "center",
-        // marginTop: "20px",
-      }} >
+      <div
+        style={{
+          display: "flex",
+          // flexDirection: "row",
+          justifyContent: "space-around",
+          // alignItems: "center",
+          // marginTop: "20px",
+        }}
+      >
         <Box
           component="form"
           sx={{
             "& .MuiTextField-root": { m: 1, width: "25ch" },
             display: "flex",
             alignItems: "center",
-            mr:1
+            mr: 1,
           }}
           // noValidate
           autoComplete="off"
@@ -169,6 +183,8 @@ const Attendance = ({ api }) => {
           </Button>
         </Box>
 
+        <Loader loading={loading} />
+
         {student && student.isClassAssign && (
           <div>
             <StudentCard student={student} />
@@ -177,10 +193,10 @@ const Attendance = ({ api }) => {
       </div>
 
       {/* <div> */}
-        {/* {student && student.isClassAssign && ( */}
-           {/* <div> */}
-            {/* <StudentCard student={student} /> */}
-            {/* <form onSubmit={handleAttendance}>
+      {/* {student && student.isClassAssign && ( */}
+      {/* <div> */}
+      {/* <StudentCard student={student} /> */}
+      {/* <form onSubmit={handleAttendance}>
               <span>Select Date</span>
               <input
                 type="date"
@@ -203,8 +219,8 @@ const Attendance = ({ api }) => {
               </select>
               <input type="submit"></input>
             </form> */}
-          {/* </div> */}
-        {/* )} */}
+      {/* </div> */}
+      {/* )} */}
       {/* </div> */}
 
       <div>
@@ -212,7 +228,10 @@ const Attendance = ({ api }) => {
           <div>
             <h2>Student's Attendance Detail</h2>
             {/* <button onClick={loadAttendance}>Load Attendance</button> */}
-            <AttendanceTable attendance={loadedAttend} />
+            {loadedAttend.length > 0 ? <AttendanceTable attendance={loadedAttend} /> : "No Data Found"}
+            {
+              console.log()
+            }
             {/* <ul>
               {loadedAttend.map((eachAttend, index) => {
                 return (
