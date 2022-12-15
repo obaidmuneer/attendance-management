@@ -21,7 +21,7 @@ if (window.location.protocol === "http:") {
 
 const App = () => {
   let { state, dispatch } = useContext(GlobalContext);
-  console.log(state);
+  // console.log(state);
   const darkTheme = createTheme({
     palette: {
       mode: state.theme,
