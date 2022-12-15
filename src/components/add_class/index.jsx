@@ -4,6 +4,7 @@ import * as yup from "yup";
 import Button from "@mui/material/Button";
 import ModifiedTextField from "../textfield";
 import Box from "@mui/material/Box";
+import moment from "moment/moment";
 
 const validationSchema = yup.object({
   teacher: yup
@@ -35,18 +36,31 @@ const AddClass = ({ api }) => {
     },
     validationSchema,
     onSubmit: (values, actions) => {
-      console.log("Submitted", values);
-      handleSubmit();
-      actions.resetForm({
-        values: {
-          teacher: "",
-          batch: formik.values.batch,
-          course: formik.values.course,
-          section: "",
-          classTiming: "",
-          classSchedule: formik.values.classSchedule,
-        },
-      });
+      // console.log("Submitted", values);
+      const time = values.classTiming;
+      const sepTime = time.indexOf("to");
+      const startTime = moment(time.slice(0, sepTime - 1), "h a");
+      const endTime = moment(time.slice(sepTime + 2), "h a");
+      console.log(sepTime, startTime, endTime);
+      // console.log(startTime.format('hh:mm:a'));
+      // console.log(endTime.format('hh:mm:a'));
+      console.log(formik.touched.classTiming);
+      if (sepTime > -1 && startTime.isValid() && endTime.isValid()) {
+        console.log("working");
+        handleSubmit();
+        actions.resetForm({
+          values: {
+            teacher: "",
+            batch: formik.values.batch,
+            course: formik.values.course,
+            section: "",
+            classTiming: "",
+            classSchedule: formik.values.classSchedule,
+          },
+        });
+      } else {
+        actions.setFieldError("classTiming", "Invalid Timing");
+      }
     },
   });
   const handleSubmit = async () => {
