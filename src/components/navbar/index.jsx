@@ -66,8 +66,8 @@ function ResponsiveAppBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to={"/"}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -113,7 +113,10 @@ function ResponsiveAppBar() {
               {pages.map((page, index) => (
                 <MenuItem key={index} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Link style={{ textDecoration: "none" ,color: "black"}} to={page.path}>
+                    <Link
+                      style={{ textDecoration: "inherit", color: "inherit" }}
+                      to={page.path}
+                    >
                       {page.title}
                     </Link>
                   </Typography>
@@ -125,8 +128,8 @@ function ResponsiveAppBar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to={"/"}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -145,7 +148,7 @@ function ResponsiveAppBar() {
               <Link
                 key={index}
                 to={page.path}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "inherit" }}
               >
                 <Button
                   onClick={handleCloseNavMenu}
@@ -190,7 +193,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <CustomizedSwitches />
           </Box>
-
+          
         </Toolbar>
       </Container>
     </AppBar>
