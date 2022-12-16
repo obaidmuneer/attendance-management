@@ -21,9 +21,9 @@ const Attendance = ({ api }) => {
   const handleAttendance = async (roll_num) => {
     console.log(roll);
     try {
-      const result = await axios.post(`${api}/mark_attandance`, {
+      const result = await axios.post(`${api}/mark_attendance`, {
         roll: roll_num || roll,
-        marked_attendance: "Present",
+        marked_attendance: "present",
         selected_date: moment(Date.now()).format("MMM Do YY"),
       });
       console.log(result.data.msg);
