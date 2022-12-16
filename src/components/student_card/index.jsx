@@ -20,6 +20,7 @@ export default function StudentCard({ student }) {
 
             <Typography variant="body2">Course: {student?.course}</Typography>
             <Typography variant="body2">Roll: {student?.roll}</Typography>
+            <Typography variant="body2">Attendance %: {student?.attendacePercent}</Typography>
           </CardContent>
           <Avatar
             sx={{ width: 70, height: 70 }}
