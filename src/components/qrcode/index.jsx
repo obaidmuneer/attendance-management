@@ -1,3 +1,4 @@
+import { Typography, Box, TextField } from "@mui/material";
 import axios from "axios";
 import moment from "moment";
 import { useState, useEffect } from "react";
@@ -29,6 +30,7 @@ const Attendance = ({ api }) => {
       console.log(result.data.msg);
       setMsg(result.data.msg);
       setStudent(result.data.student);
+      setRoll('')
       //   setTimeout(() => {
       //     setStudent(null);
       //     setMsg(null);
@@ -47,57 +49,53 @@ const Attendance = ({ api }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      document.querySelector("#roll_num").focus();
+      document.querySelector("#standard-basic").focus();
     }, 500);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="container">
-      <form
+      <div
         style={
           flag
             ? {
-                transform: "translateY(-100%)",
-                margin: "-75px",
-                transition: "transform ease-in-out 0.2s",
-              }
+              transform: "translateY(-200%)",
+              transition: "transform ease-in-out 0.2s",
+            }
             : {
-                transform: "translateY(0)",
-                transition: "transform ease-in-out 0.2s",
-              }
+              transform: "translateY(0)",
+              transition: "transform ease-in-out 0.2s",
+            }
         }
-        onSubmit={handleSubmit}
       >
-        <div className={"webflow-style-input"}>
-          <input
-            className="roll"
-            id="roll_num"
-            autoComplete="off"
-            type="text"
-            placeholder="Enter Roll Number!"
-            onChange={(e) => {
-              setRoll(e.target.value);
-              setFlag(false);
-              setTimeout(() => {
-                setFlag(true);
-              }, 2000);
-            }}
+        <Box
+          component="form"
+
+          sx={{
+            '& > :not(style)': { m: 1, width: '12ch' },
+
+          }}
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <TextField id="standard-basic" label="Student's Roll No" variant="standard" onChange={(e) => {
+            setRoll(e.target.value);
+            setFlag(false);
+            setTimeout(() => {
+              setFlag(true);
+            }, 2000);
+          }}
             value={roll}
+
           />
-          <button type="submit">
-            <i className="roll_btn icon ion-android-arrow-forward"></i>
-            {">"}
-          </button>
-        </div>
-      </form>
+        </Box>
+      </div>
 
       {msg ? (
-        <div>
-          <h3>{msg}</h3>
-        </div>
+        <Typography variant="h5" >{msg}</Typography>
       ) : (
-        <h3>Please Show Your ID Card To Mark Your Attendance</h3>
+        <Typography variant="h5" >Please Show Your ID Card To Mark Your Attendance</Typography>
       )}
 
       <div className="sub-container">
@@ -130,7 +128,8 @@ const Attendance = ({ api }) => {
 
       {msg && (
         <div className="assit-msg">
-          <p>To Mark Your Attendance Please your ID Card in Camera</p>
+          <Typography variant="body" >To Mark Your Attendance Please your ID Card in Camera</Typography>
+          <p></p>
         </div>
       )}
     </div>
