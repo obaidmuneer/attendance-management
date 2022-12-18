@@ -54,18 +54,23 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function CustomizedSwitches() {
   let { state, dispatch } = useContext(GlobalContext);
+
+  const handleChange = () => {
+    const theme = state.theme === "dark" ? "light" : "dark"
+    dispatch({
+      type: "theme",
+      payload: theme,
+    })
+    localStorage.setItem('theme', theme)
+
+  }
   return (
     <FormGroup>
       <FormControlLabel
         control={
           <MaterialUISwitch
             checked={state.theme === "dark"}
-            onChange={() =>
-              dispatch({
-                type: "theme",
-                payload: state.theme === "dark" ? "light" : "dark",
-              })
-            }
+            onChange={handleChange}
             sx={{ m: 1 }}
           />
         }

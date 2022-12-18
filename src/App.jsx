@@ -13,7 +13,7 @@ import { useContext, useEffect } from "react";
 import { GlobalContext } from "./context/context";
 
 let api = "";
-if (window.location.protocol === "http:") {
+if (window.location.protocol === "https:") {
   api = "http://localhost:8080";
 } else {
   api = "https://attendance-management-server.up.railway.app";
@@ -30,8 +30,9 @@ const App = () => {
 
   useEffect(() => {
     dispatch({
-      type: 'theme',
-      payload: window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
+      type: "theme",
+      payload: Boolean(localStorage.theme) ? localStorage.theme :
+        window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark",
     })
   }, [])
 
