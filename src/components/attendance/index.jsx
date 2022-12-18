@@ -1,13 +1,18 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
-import moment from "moment";
-import { useState } from "react";
-import StudentsList from "../students_list";
+
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import StudentCard from "../student_card";
-import AttendanceTable from "../attendance_table";
-import Loader from "../loader";
+import TextField from "@mui/material/TextField";
+
+import Loader from "../../ui-components/loader";
+import MCard from "../../ui-components/mcard";
+import MTable from "../../ui-components/mtable";
+
+const columns = [
+  { id: "selected_date", label: "Date", minWidth: 170 },
+  { id: "marked_attendance", label: "Attendance Status", minWidth: 170 },
+];
 
 const Attendance = ({ api }) => {
   const [students, setStudents] = useState([]);
@@ -37,6 +42,11 @@ const Attendance = ({ api }) => {
       });
     console.log(student);
   };
+
+  useEffect(() => {
+    document.querySelector('#standard-number').focus()
+  }, [])
+
   const handleAttendance = (e) => {
     e.preventDefault();
     console.log(marked_attendance);
@@ -187,7 +197,7 @@ const Attendance = ({ api }) => {
 
         {student && student.isClassAssign && (
           <div>
-            <StudentCard student={student} />
+            <MCard student={student} />
           </div>
         )}
       </div>
@@ -228,7 +238,7 @@ const Attendance = ({ api }) => {
           <div>
             <h2>Student's Attendance Detail</h2>
             {/* <button onClick={loadAttendance}>Load Attendance</button> */}
-            {loadedAttend.length > 0 ? <AttendanceTable attendance={loadedAttend} /> : "No Data Found"}
+            {loadedAttend.length > 0 ? <MTable attendance={loadedAttend} columns={columns} /> : "No Data Found"}
             {
               console.log()
             }
