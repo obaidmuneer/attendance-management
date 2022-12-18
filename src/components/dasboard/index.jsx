@@ -11,6 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 
 
 const Dashboard = ({ api }) => {
@@ -52,18 +53,17 @@ const Dashboard = ({ api }) => {
     return (
         <div style={{ padding: '1%' }} >
             <h3>Dashbord</h3>
-            {/* <EnrollStudents api={api} deLoad={setData} data={data} students={students} /> */}
 
             <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                 <List >
                     {
                         students.map((std, index) => {
                             return !std.isClassAssign && <div key={index}>
-                                <ListItem disableTouchRipple={true} disablePadding >
+                                <ListItem disablePadding >
                                     <ListItemButton>
                                         <ListItemText primary={`${std.name} applied for ${std.course} course`} />
                                         <ClassesList api={api} std={std} deLoad={setData} data={data} uniqKey={index} />
-                                        <input type="button" value="Approve" onClick={() => approveStudent(std, index)} />
+                                        <Button variant="contained" onClick={() => approveStudent(std, index)} >Approve</Button>
                                     </ListItemButton>
                                 </ListItem>
                                 <Divider />
@@ -71,7 +71,6 @@ const Dashboard = ({ api }) => {
                             </div>
                         })
                     }
-
                 </List>
             </Box>
 
