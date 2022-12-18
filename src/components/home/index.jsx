@@ -8,12 +8,12 @@ import Typography from '@mui/material/Typography'
 
 import Dashboard from "../dasboard"
 import MCard from '../../ui-components/mcard';
-
-
+import MSkeletonCard from "../../ui-components/mskeletoncard";
 
 const Home = ({ api }) => {
     const [topStudents, setTopStudents] = useState([])
     const [checkStudents, setCheckStudents] = useState([])
+    const [loading, setLoading] = useState(true)
 
 
     useEffect(() => {
@@ -21,6 +21,7 @@ const Home = ({ api }) => {
             .then(res => {
                 setTopStudents(res.data.topStudents)
                 setCheckStudents(res.data.checkStudents)
+                setLoading(false)
             })
         // eslint-disable-next-line
     }, [])
@@ -28,15 +29,16 @@ const Home = ({ api }) => {
     return (
         <div>
             <Dashboard api={api} />
+           
 
-            <Box sx={{ flexGrow: 1 }} >
+            {loading ?  <MSkeletonCard arrLength={2} /> : <Box sx={{ flexGrow: 1 }} >
                 <Grid container
                     spacing={2}
                     direction="row"
                     justifyContent="center"
                     alignItems="center" >
                     <Grid item xs={'auto'} >
-                        {topStudents.length > 0  && <Typography variant='h5'> Top Students by Attendance</Typography>}
+                        {topStudents.length > 0 && <Typography variant='h5'> Top Students by Attendance</Typography>}
                         <Carousel
                             indicators={false}
                             height={150}
@@ -64,7 +66,7 @@ const Home = ({ api }) => {
                         </Carousel>
                     </Grid>
                 </Grid>
-            </Box>
+            </Box>}
         </div >
     )
 }
