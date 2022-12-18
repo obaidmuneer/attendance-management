@@ -19,7 +19,7 @@ export default function SelectSection({ classData, selectedBatch, deLoad, data, 
     }
 
     return (
-        <FormControl sx={{ minWidth: 150 }}>
+        <FormControl sx={{ minWidth: 150 , ml:1}}>
             <InputLabel id="section-select-label">Select Section</InputLabel>
             <Select
                 labelId="section-select-label"

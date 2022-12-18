@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
@@ -10,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
 import UnApprovedList from '../unapproved_list'
+import { Grid } from '@mui/material';
 
 
 const Dashboard = ({ api }) => {
@@ -45,26 +45,39 @@ const Dashboard = ({ api }) => {
         <div style={{ padding: '1%' }} >
             <h3>Dashbord</h3>
 
-            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                <List>
-                    {
-                        students.map((std, index) => {
-                            return !std.isClassAssign &&
-                                <div key={index}>
-                                    <ListItem disablePadding >
-                                        <ListItemButton>
+            <List>
+                {
+                    students.map((std, index) => {
+                        return !std.isClassAssign &&
+                            <div key={index}>
+                                <ListItem disablePadding>
+                                    <ListItemButton disableRipple >
+                                    <Grid container spacing={1}
+                                        // columns={{ xs: 12, sm: 12, md: 12 }}
+                                        // textAlign={'center'}
+                                        direction="row"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                    >
+                                        <Grid item xs={12} sm={4} md={6} lg={6} >
                                             <ListItemText primary={`${std.name} applied for ${std.course} course`} />
+                                        </Grid>
+                                        {/* <Box> */}
+                                        <Grid item xs={12} sm={6} md={4} lg={5} >
                                             <UnApprovedList api={api} std={std} deLoad={setData} data={data} uniqKey={index} />
-                                            <Button variant="contained" onClick={() => approveStudent(std, index)} >Approve</Button>
-                                        </ListItemButton>
-                                    </ListItem>
-                                    <Divider />
-                                </div>
-                        })
-                    }
-                </List>
-            </Box>
-        </div>
+                                        </Grid>
+                                        <Grid item xs={12} sm={2} md={2} lg={1} >
+                                            <Button fullWidth variant="contained" onClick={() => approveStudent(std, index)} >Approve</Button>
+                                        </Grid>
+                                    </Grid>
+                                    </ListItemButton>
+                                </ListItem>
+                                <Divider />
+                            </div>
+                    })
+                }
+            </List>
+        </div >
 
     )
 }

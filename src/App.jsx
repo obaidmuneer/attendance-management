@@ -13,7 +13,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./App.css";
 
 let api = "";
-if (window.location.protocol === "https:") {
+if (window.location.protocol === "http:") {
   api = "http://localhost:8080";
 } else {
   api = "https://attendance-management-server.up.railway.app";
@@ -34,6 +34,7 @@ const App = () => {
       payload: Boolean(localStorage.theme) ? localStorage.theme :
         window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark",
     })
+    //eslint-disable-next-line
   }, [])
 
   return (

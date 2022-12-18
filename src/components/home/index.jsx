@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
 
+import Box from '@mui/material/Box';
 import Carousel from 'react-material-ui-carousel'
-import Stack from "@mui/material/Stack";
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography'
 
 import Dashboard from "../dasboard"
 import MCard from '../../ui-components/mcard';
+
+
 
 const Home = ({ api }) => {
     const [topStudents, setTopStudents] = useState([])
@@ -26,38 +29,43 @@ const Home = ({ api }) => {
         <div>
             <Dashboard api={api} />
 
-            <Stack direction="row" sx={{ justifyContent: "space-around" }} spacing={2}>
-                <div className='carousel-container' >
-                    <Typography variant='h5'> Top Students by Attendance</Typography>
-                    <Carousel
-                        indicators={false}
-                        height={150}
-                    // sx={{ width: '25%' }}
-                    >
-                        {
-                            topStudents.map(student => {
-                                return <MCard key={student.roll} student={student} />
-                            })
-                        }
-                    </Carousel>
-                </div>
+            <Box sx={{ flexGrow: 1 }} >
+                <Grid container
+                    spacing={2}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center" >
+                    <Grid item xs={'auto'} >
+                        {topStudents.length > 0  && <Typography variant='h5'> Top Students by Attendance</Typography>}
+                        <Carousel
+                            indicators={false}
+                            height={150}
+                        >
+                            {
+                                topStudents.map(student => {
+                                    return <MCard key={student.roll} student={student} />
+                                })
+                            }
+                        </Carousel>
+                    </Grid>
 
-                <div>
-                    <Typography variant='h5'> Attension needed Students</Typography>
-                    <Carousel
-                        indicators={false}
-                        height={150}
-                    // sx={{ width: '25%' }}
-                    >
-                        {
-                            checkStudents.map(student => {
-                                return <MCard key={student.roll} student={student} />
-                            })
-                        }
-                    </Carousel>
-                </div>
-            </Stack>
-        </div>
+
+                    <Grid item xs={'auto'} >
+                        {checkStudents.length > 0 && <Typography variant='h5'> Attension needed Students</Typography>}
+                        <Carousel
+                            indicators={false}
+                            height={150}
+                        >
+                            {
+                                checkStudents.map(student => {
+                                    return <MCard key={student.roll} student={student} />
+                                })
+                            }
+                        </Carousel>
+                    </Grid>
+                </Grid>
+            </Box>
+        </div >
     )
 }
 
