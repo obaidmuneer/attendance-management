@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { CardActionArea } from "@mui/material";
 
-export default function StudentCard({ student }) {
+export default function MCard({ student }) {
   return (
     <CardActionArea sx={{width: 275}} >
       <Card sx={{ maxWidth: 275 }}>

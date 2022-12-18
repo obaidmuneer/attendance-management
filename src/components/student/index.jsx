@@ -1,7 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Loader from "../loader";
-import StudentTable from "../student_table";
+import MTable from "../../ui-components/mtable";
+import Loader from "../../ui-components/loader";
+
+const columns = [
+  { id: "name", label: "Name", minWidth: 170 },
+  { id: "fathername", label: "Father Name", minWidth: 170 },
+  { id: "roll", label: "Roll Number", minWidth: 170 },
+  { id: "contact", label: "Phone Number", minWidth: 170 },
+  { id: "course", label: "Course", minWidth: 170 },
+  // { id: "picture", label: "Photo", minWidth: 170 },
+];
 
 const Student = ({ api }) => {
   const [students, setStudents] = useState([]);
@@ -25,7 +34,7 @@ const Student = ({ api }) => {
   return (
     <div>
       {
-        loading ? <Loader loading={loading} /> : <StudentTable students={students} />
+        loading ? <Loader loading={loading} /> : <MTable students={students} columns={columns} />
       }
     </div>
   );

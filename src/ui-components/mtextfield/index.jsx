@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 
-const ModifiedTextField = ({ str, type, placeHelper, formik }) => {
+const MTextField = ({ str, type, placeHelper, formik }) => {
   return (
     <TextField
       id={str}
@@ -21,4 +21,4 @@ const ModifiedTextField = ({ str, type, placeHelper, formik }) => {
   );
 };
 
-export default ModifiedTextField;
+export default MTextField;

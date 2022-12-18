@@ -1,16 +1,18 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Button from "@mui/material/Button";
-import ModifiedTextField from "../textfield";
+
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
+import MTextField from "../../ui-components/mtextfield";
 
 const validationSchema = yup.object({
   name: yup
@@ -43,7 +45,7 @@ const AddStudent = ({ api }) => {
       console.log("Submitted", values);
       handleSubmit();
       actions.resetForm({
-        values:{
+        values: {
           name: "",
           fathername: "",
           contact: "",
@@ -56,7 +58,7 @@ const AddStudent = ({ api }) => {
   });
 
   const handleSubmit = async () => {
-    const { name, fathername, contact, cnic, course , pic } = formik.values;
+    const { name, fathername, contact, cnic, course, pic } = formik.values;
     console.log(Boolean(pic));
 
     const result = await axios.post(`${api}/students`, {
@@ -64,7 +66,7 @@ const AddStudent = ({ api }) => {
       fathername,
       contact,
       cnic,
-      course, 
+      course,
     });
     console.log(result.data.data.roll);
 
@@ -109,23 +111,23 @@ const AddStudent = ({ api }) => {
         autoComplete="off"
         onSubmit={formik.handleSubmit}
       >
-        <ModifiedTextField
+        <MTextField
           str={"name"}
           placeHelper="Enter Student's Name"
           formik={formik}
         />
-        <ModifiedTextField
+        <MTextField
           str={"fathername"}
           placeHelper="Enter Father Name"
           formik={formik}
         />
-        <ModifiedTextField
+        <MTextField
           str={"contact"}
           placeHelper="Enter Phone no i.e 031212345678"
           formik={formik}
           type={"number"}
         />
-        <ModifiedTextField
+        <MTextField
           str={"cnic"}
           placeHelper={"Enter CNIC no xxxxx-xxxxxxx-x"}
           formik={formik}
@@ -136,7 +138,7 @@ const AddStudent = ({ api }) => {
 
         <Stack direction="row" alignItems="center" spacing={4}>
           <FormControl
-          
+
             sx={{ width: "20ch" }}
             error={formik.touched.course && Boolean(formik.errors.course)}
           >

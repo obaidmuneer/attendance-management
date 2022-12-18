@@ -13,8 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
-import CustomizedSwitches from "../darkmode";
-
+import ThemeSwitch from "../../themes/theme_switch"
 const pages = [
   {
     path: "/home",
@@ -39,7 +38,7 @@ const pages = [
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function ResponsiveAppBar() {
+const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -191,12 +190,12 @@ function ResponsiveAppBar() {
           </Box> */}
 
           <Box sx={{ flexGrow: 0 }}>
-            <CustomizedSwitches />
+            <ThemeSwitch />
           </Box>
-          
+
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+export default Navbar;

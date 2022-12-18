@@ -1,16 +1,16 @@
-import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import Home from "./components/home";
-import Student from "./components/student";
-import Attendance from "./components/attendance";
-import AddStudent from "./components/add_student";
-import AddClass from "./components/add_class";
-import QrCode from "./components/qrcode";
-import ResponsiveAppBar from "./components/navbar";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import { useContext, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import { GlobalContext } from "./context/context";
+import AddClass from "./components/add_class";
+import AddStudent from "./components/add_student";
+import Attendance from "./components/attendance";
+import Home from "./components/home";
+import Navbar from "./components/navbar";
+import QrCode from "./components/qrcode";
+import Student from "./components/student";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import "./App.css";
 
 let api = "";
 if (window.location.protocol === "https:") {
@@ -42,7 +42,7 @@ const App = () => {
 
       <div className="App">
         <div className="App-container">
-          <ResponsiveAppBar />
+          <Navbar />
 
           <Routes>
             <Route path="/" element={<QrCode api={api} />} />

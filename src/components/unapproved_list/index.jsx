@@ -5,7 +5,7 @@ import SelectSection from "../select_section"
 import Stack from "@mui/material/Stack";
 
 
-const ClassesList = ({ api, std, deLoad, data, uniqKey }) => {
+const UnApprovedList = ({ api, std, deLoad, data, uniqKey }) => {
     const [classData, setClassData] = useState([])
     const [selectedBatch, setSelectedBatch] = useState('')
 
@@ -24,4 +24,4 @@ const ClassesList = ({ api, std, deLoad, data, uniqKey }) => {
     )
 }
 
-export default ClassesList
+export default UnApprovedList

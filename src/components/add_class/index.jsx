@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
+
 import Button from "@mui/material/Button";
-import ModifiedTextField from "../textfield";
 import Box from "@mui/material/Box";
 import moment from "moment/moment";
+
+import MTextField from "../../ui-components/mtextfield";
 
 const validationSchema = yup.object({
   teacher: yup
@@ -104,37 +106,37 @@ const AddClass = ({ api }) => {
           autoComplete="off"
           onSubmit={formik.handleSubmit}
         >
-          <ModifiedTextField
+          <MTextField
             str={"teacher"}
             placeHelper={"Enter Teacher's Name"}
             formik={formik}
           />
           <br />
-          <ModifiedTextField
+          <MTextField
             str={"course"}
             placeHelper={"Enter Course Name i.e WEB"}
             formik={formik}
           />
           <br />
-          <ModifiedTextField
+          <MTextField
             str={"batch"}
             placeHelper={"Enter Batch no i.e 2, 3"}
             formik={formik}
           />
           <br />
-          <ModifiedTextField
+          <MTextField
             str={"section"}
             placeHelper={"Enter Section Name i.e A, B"}
             formik={formik}
           />
           <br />
-          <ModifiedTextField
+          <MTextField
             str={"classTiming"}
             placeHelper={"9pm to 10pm or 9:00PM to 10:00PM"}
             formik={formik}
           />
           <br />
-          <ModifiedTextField
+          <MTextField
             str={"classSchedule"}
             placeHelper={"Classes Day i.e MWF , TTS , Sunday"}
             formik={formik}

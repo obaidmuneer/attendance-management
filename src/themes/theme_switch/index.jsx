@@ -52,7 +52,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedSwitches() {
+export default function ThemeSwitch() {
   let { state, dispatch } = useContext(GlobalContext);
 
   const handleChange = () => {
