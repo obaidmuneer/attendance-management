@@ -59,6 +59,7 @@ export default function CustomizedSwitches() {
       <FormControlLabel
         control={
           <MaterialUISwitch
+            checked={state.theme === "dark"}
             onChange={() =>
               dispatch({
                 type: "theme",

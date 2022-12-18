@@ -9,7 +9,7 @@ import QrCode from "./components/qrcode";
 import ResponsiveAppBar from "./components/navbar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "./context/context";
 
 let api = "";
@@ -27,6 +27,13 @@ const App = () => {
       mode: state.theme,
     },
   });
+
+  useEffect(() => {
+    dispatch({
+      type: 'theme',
+      payload: window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
+    })
+  }, [])
 
   return (
     <ThemeProvider theme={darkTheme}>
