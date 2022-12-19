@@ -34,7 +34,7 @@ const Student = ({ api }) => {
   return (
     <div>
       {
-        loading ? <Loader loading={loading} /> : <MTable students={students} columns={columns} />
+        loading ? <Loader loading={loading} /> : <MTable students={students} columns={columns} height={'100vh'} />
       }
     </div>
   );

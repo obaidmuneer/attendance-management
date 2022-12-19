@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import Loader from "../../ui-components/loader";
 import MCard from "../../ui-components/mcard";
 import MTable from "../../ui-components/mtable";
+import Grid from "@mui/material/Grid";
 
 const columns = [
   { id: "selected_date", label: "Date", minWidth: 170 },
@@ -102,6 +103,8 @@ const Attendance = ({ api }) => {
   return (
     <div style={{ padding: 5 }}>
       <h1>Attendance Summary Page</h1>
+      <Loader loading={loading} />
+
       {/* <span>Load Students</span>
       <select
         defaultValue={"course"}
@@ -156,51 +159,49 @@ const Attendance = ({ api }) => {
 
       <StudentsList students={students} /> */}
 
-      <div
-        style={{
-          display: "flex",
-          // flexDirection: "row",
-          justifyContent: "space-around",
-          // alignItems: "center",
-          // marginTop: "20px",
-        }}
-      >
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-            display: "flex",
-            alignItems: "center",
-            mr: 1,
-          }}
-          // noValidate
-          autoComplete="off"
-          onSubmit={handleSubmit}
-        >
-          <TextField
-            id="standard-number"
-            label="Please enter a roll number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            onChange={(e) => setRoll(+e.target.value)}
-            value={roll}
-          />
-          <Button type="submit" variant="contained" size="medium">
-            Submit
-          </Button>
-        </Box>
 
-        <Loader loading={loading} />
+      <Grid container spacing={2}
+        justifyContent="space-around"
+        alignItems="center"
+      >
+        <Grid item xs={'auto'} >
+
+
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+              display: "flex",
+              alignItems: "center",
+              mr: 1,
+            }}
+            // noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              id="standard-number"
+              label="Please enter a roll number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              onChange={(e) => setRoll(+e.target.value)}
+              value={roll}
+            />
+            <Button type="submit" variant="contained" size="medium">
+              Submit
+            </Button>
+          </Box>
+        </Grid>
 
         {student && student.isClassAssign && (
-          <div>
+          <Grid item xs={'auto'}>
             <MCard student={student} />
-          </div>
+          </Grid>
         )}
-      </div>
+      </Grid>
 
       {/* <div> */}
       {/* {student && student.isClassAssign && ( */}
@@ -237,21 +238,7 @@ const Attendance = ({ api }) => {
         {student && (
           <div>
             <h2>Student's Attendance Detail</h2>
-            {/* <button onClick={loadAttendance}>Load Attendance</button> */}
-            {loadedAttend.length > 0 ? <MTable attendance={loadedAttend} columns={columns} /> : "No Data Found"}
-            {
-              console.log()
-            }
-            {/* <ul>
-              {loadedAttend.map((eachAttend, index) => {
-                return (
-                  <li key={index}>
-                    date : {eachAttend.selected_date}{" "}
-                    {eachAttend.marked_attendance}{" "}
-                  </li>
-                );
-              })}
-            </ul> */}
+            {loadedAttend.length > 0 ? <MTable attendance={loadedAttend} columns={columns} height={440} /> : "No Data Found"}
           </div>
         )}
       </div>

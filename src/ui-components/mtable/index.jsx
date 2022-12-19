@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-export default function MTable({ students, attendance, columns }) {
+export default function MTable({ students, attendance, columns , height }) {
   const rows = students || attendance;
 
   const [page, setPage] = useState(0);
@@ -25,7 +25,7 @@ export default function MTable({ students, attendance, columns }) {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: height }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
