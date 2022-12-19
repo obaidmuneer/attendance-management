@@ -14,6 +14,8 @@ const Home = ({ api }) => {
     const [topStudents, setTopStudents] = useState([])
     const [checkStudents, setCheckStudents] = useState([])
     const [loading, setLoading] = useState(true)
+    const [loadingClaxx, setLoadingClaxx] = useState(true)
+    const [claxxex, setClaxxex] = useState([])
 
 
     useEffect(() => {
@@ -23,15 +25,21 @@ const Home = ({ api }) => {
                 setCheckStudents(res.data.checkStudents)
                 setLoading(false)
             })
+
+        axios.get(`${api}/classes`).then(res => {
+            // console.log(res.data.data)
+            setClaxxex(res.data.data)
+            setLoadingClaxx(false)
+        })
         // eslint-disable-next-line
     }, [])
 
     return (
         <div>
             <Dashboard api={api} />
-           
 
-            {loading ?  <MSkeletonCard arrLength={2} /> : <Box sx={{ flexGrow: 1 }} >
+
+            {loading ? <MSkeletonCard arrLength={2} /> : <Box sx={{ flexGrow: 1 }} >
                 <Grid container
                     spacing={2}
                     direction="row"
@@ -67,6 +75,35 @@ const Home = ({ api }) => {
                     </Grid>
                 </Grid>
             </Box>}
+
+
+            {loadingClaxx ? <>
+                <MSkeletonCard arrLength={3} claxx={true} />
+                <MSkeletonCard arrLength={3} claxx={true} />
+            </> : <Box sx={{
+                flexGrow: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                my:2
+            }} >
+                <Typography variant="h5" >Classes</Typography>
+                <Grid container
+                    spacing={2}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center" >
+                    {
+                        claxxex.map((claxx, index) => {
+                            return <Grid xs={'auto'} sm={'auto'} md={'auto'} item key={index}>
+                                <MCard claxx={claxx} />
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Box>}
+
         </div >
     )
 }
