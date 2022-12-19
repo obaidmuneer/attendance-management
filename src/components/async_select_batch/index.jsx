@@ -26,7 +26,7 @@ export default function AsyncSelectBatch({ api, std, selectbatch, selectClass })
     }, [open]);
 
     const getClass = (std) => {
-        axios.get(`${api}/get_class/${std.course}`)
+        axios.get(`${api}/classes/${std.course}`)
             .then(res => {
                 selectClass(res.data.data)
                 uniq(res.data.data)
