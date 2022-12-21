@@ -19,11 +19,13 @@ const Home = ({ api }) => {
 
 
     useEffect(() => {
-        axios.post(`${api}/top_check_std`)
+        axios.get(`${api}/attendance/top_std`)
             .then(res => {
                 setTopStudents(res.data.topStudents)
                 setCheckStudents(res.data.checkStudents)
                 setLoading(false)
+                // console.log(res.data)
+
             })
 
         axios.get(`${api}/classes`).then(res => {
@@ -86,7 +88,7 @@ const Home = ({ api }) => {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                my:2
+                my: 2
             }} >
                 <Typography variant="h5" >Classes</Typography>
                 <Grid container

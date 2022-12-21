@@ -52,8 +52,7 @@ const Attendance = ({ api }) => {
     e.preventDefault();
     console.log(marked_attendance);
     axios
-      .post(`${api}/mark_attandance`, {
-        roll: student.roll,
+      .post(`${api}/attendance/${student.roll}`, {
         marked_attendance,
         selected_date,
       })
@@ -66,7 +65,7 @@ const Attendance = ({ api }) => {
   const loadStudents = () => {
     // console.log(e.target.value);
     axios
-      .post(`${api}/class/${selectedCourse}`, {
+      .post(`${api}/attendance/${selectedCourse}`, {
         batch: selectedBatch,
         section: selectedSec,
       })
@@ -80,7 +79,7 @@ const Attendance = ({ api }) => {
 
   const loadAttendance = (roll) => {
     axios
-      .get(`${api}/marked_attendance/${roll || student.roll}`)
+      .get(`${api}/attendance/${roll || student.roll}`)
       .then((res) => {
         setLoading(false);
         setLoadedAttend(res.data.attendance);

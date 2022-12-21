@@ -16,7 +16,9 @@ let api = "";
 if (window.location.protocol === "http:") {
   api = "http://localhost:8080";
 } else {
-  api = "https://attendance-management-server.up.railway.app";
+  // api = "https://attendance-management-server.up.railway.app";
+  api = "https://helpful-earmuffs-cod.cyclic.app";
+  
 }
 
 const App = () => {

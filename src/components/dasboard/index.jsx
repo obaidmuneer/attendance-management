@@ -34,9 +34,8 @@ const Dashboard = ({ api }) => {
             return item.uniqKey === index
         })
         // console.log(filteredData[0].selectedBatch);
-        axios.post(`${api}/enroll_student`, {
+        axios.put(`${api}/students/${std.roll}`, {
             course: std.course,
-            roll: std.roll,
             batch: filteredData[0].selectedBatch,
             section: filteredData[0].selectedSec
         })

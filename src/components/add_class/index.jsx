@@ -77,7 +77,7 @@ const AddClass = ({ api }) => {
         course,
         batch,
       };
-      const result = await axios.post(`${api}/add_class`, data);
+      const result = await axios.post(`${api}/classes`, data);
       console.log(result.data);
     } catch (error) {
       console.log(error.message);
