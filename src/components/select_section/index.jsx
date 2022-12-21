@@ -8,11 +8,12 @@ export default function SelectSection({ classData, selectedBatch, deLoad, data, 
     const [section, setSection] = useState('')
 
     const handleChange = (e) => {
+        // console.log(e.target.value);
         setSection(e.target.value)
         deLoad(
             [...data, {
                 selectedBatch,
-                selectedSec: section,
+                selectedSec: e.target.value,
                 uniqKey
             }]
         )

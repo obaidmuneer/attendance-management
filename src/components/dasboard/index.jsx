@@ -29,7 +29,7 @@ const Dashboard = ({ api }) => {
     }, [])
 
     const approveStudent = (std, index) => {
-        // console.log(data);
+        console.log(data);
         const filteredData = data.filter((item) => {
             return item.uniqKey === index
         })
@@ -39,10 +39,15 @@ const Dashboard = ({ api }) => {
             batch: filteredData[0].selectedBatch,
             section: filteredData[0].selectedSec
         })
-        let studentData = students.filter((eachStd, index) => {
-            return eachStd.roll !== std.roll
-        })
-        setStudents(studentData)
+            .then(res => {
+                let studentData = students.filter((eachStd, index) => {
+                    return eachStd.roll !== std.roll
+                })
+                setStudents(studentData)
+                console.log(res)
+            })
+            .catch(err => console.log(err))
+
     }
 
     return (

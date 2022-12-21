@@ -75,7 +75,7 @@ const AddStudent = ({ api }) => {
       formData.append("pic", pic);
       // console.log(formData);
 
-      const imgResult = await axios.post(
+      const imgResult = await axios.put(
         `${api}/students/img/${result.data.data.roll}`,
         formData,
         {
