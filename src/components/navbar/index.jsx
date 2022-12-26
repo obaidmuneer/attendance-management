@@ -32,8 +32,8 @@ const pages = [
     title: "Student List",
   },
   {
-    path: "/attendance",
-    title: "Attendance",
+    path: "/student",
+    title: "Student",
   },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
