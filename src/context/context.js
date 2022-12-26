@@ -4,6 +4,7 @@ export const GlobalContext = createContext("initialState");
 
 let data = {
   theme: "light",
+  student: null,
 };
 
 export default function ContextProvider({ children }) {
