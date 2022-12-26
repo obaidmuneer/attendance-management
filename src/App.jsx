@@ -1,6 +1,8 @@
 import { useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import { GlobalContext } from "./context/context";
+
 import AddClass from "./components/add_class";
 import AddStudent from "./components/add_student";
 import Attendance from "./components/attendance";
@@ -8,9 +10,13 @@ import Home from "./components/home";
 import Navbar from "./components/navbar";
 import QrCode from "./components/qrcode";
 import Students from "./components/students";
-import CssBaseline from "@mui/material/CssBaseline";
+import Student from "./components/student";
+
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
 import "./App.css";
+import StudentProfile from "./components/student_profile";
 
 let api = "";
 if (window.location.protocol === "http:") {
@@ -18,7 +24,7 @@ if (window.location.protocol === "http:") {
 } else {
   // api = "https://attendance-management-server.up.railway.app";
   api = "https://helpful-earmuffs-cod.cyclic.app";
-  
+
 }
 
 const App = () => {
@@ -52,8 +58,9 @@ const App = () => {
             <Route path="home" element={<Home api={api} />} />
             <Route path="students" element={<Students api={api} />} />
             <Route path="add_student" element={<AddStudent api={api} />} />
-            <Route path="attendance" element={<Attendance api={api} />} >
-
+            <Route path="student" element={<Student api={api} />} >
+              <Route path="attendance/:studentRoll" index element={<Attendance api={api} />} />
+              <Route path="profile/:studentRoll" element={<StudentProfile api={api} />} />
             </Route>
             <Route path="add_class" element={<AddClass api={api} />} />
           </Routes>
