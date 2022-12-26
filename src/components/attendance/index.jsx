@@ -32,7 +32,7 @@ const Attendance = ({ api }) => {
     e.preventDefault();
     setLoading(true);
     axios
-      .get(`${api}/student/${roll}`)
+      .get(`${api}/students/${roll}`)
       .then((res) => {
         setStudent(res.data.student);
         loadAttendance(res.data.student.roll);
