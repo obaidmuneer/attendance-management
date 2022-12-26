@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import axios from "axios";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-
 import Loader from "../../ui-components/loader";
-import MCard from "../../ui-components/mcard";
 import MTable from "../../ui-components/mtable";
-import Grid from "@mui/material/Grid";
 
 const columns = [
   { id: "selected_date", label: "Date", minWidth: 170 },
@@ -27,26 +22,8 @@ const Attendance = ({ api }) => {
   const [classData, setClassData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [loading, setLoading] = useState(false);
+  const { studentRoll } = useParams();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    axios
-      .get(`${api}/students/${roll}`)
-      .then((res) => {
-        setStudent(res.data.student);
-        loadAttendance(res.data.student.roll);
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.error(err);
-      });
-    console.log(student);
-  };
-
-  useEffect(() => {
-    document.querySelector('#standard-number').focus()
-  }, [])
 
   const handleAttendance = (e) => {
     e.preventDefault();
@@ -77,9 +54,10 @@ const Attendance = ({ api }) => {
     // console.log(students);
   };
 
-  const loadAttendance = (roll) => {
+  useEffect(() => {
+    setLoading(true);
     axios
-      .get(`${api}/attendance/${roll || student.roll}`)
+      .get(`${api}/attendance/${studentRoll}`)
       .then((res) => {
         setLoading(false);
         setLoadedAttend(res.data.attendance);
@@ -88,7 +66,8 @@ const Attendance = ({ api }) => {
         console.log(err)
         setLoading(false);
       });
-  };
+  }, [])
+
 
   const getClass = () => {
     axios
@@ -101,7 +80,7 @@ const Attendance = ({ api }) => {
 
   return (
     <div style={{ padding: 5 }}>
-      <h1>Attendance Summary Page</h1>
+      {/* <h1>Attendance Summary Page</h1> */}
       <Loader loading={loading} />
 
       {/* <span>Load Students</span>
@@ -158,50 +137,6 @@ const Attendance = ({ api }) => {
 
       <StudentsList students={students} /> */}
 
-
-      <Grid container spacing={2}
-        justifyContent="space-around"
-        alignItems="center"
-      >
-        <Grid item xs={'auto'} >
-
-
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
-              display: "flex",
-              alignItems: "center",
-              mr: 1,
-            }}
-            // noValidate
-            autoComplete="off"
-            onSubmit={handleSubmit}
-          >
-            <TextField
-              id="standard-number"
-              label="Please enter a roll number"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="standard"
-              onChange={(e) => setRoll(+e.target.value)}
-              value={roll}
-            />
-            <Button type="submit" variant="contained" size="medium">
-              Submit
-            </Button>
-          </Box>
-        </Grid>
-
-        {student && student.isClassAssign && (
-          <Grid item xs={'auto'}>
-            <MCard student={student} />
-          </Grid>
-        )}
-      </Grid>
-
       {/* <div> */}
       {/* {student && student.isClassAssign && ( */}
       {/* <div> */}
@@ -234,12 +169,12 @@ const Attendance = ({ api }) => {
       {/* </div> */}
 
       <div>
-        {student && (
+        {loadedAttend.length > 0 ? (
           <div>
             <h2>Student's Attendance Detail</h2>
-            {loadedAttend.length > 0 ? <MTable attendance={loadedAttend} columns={columns} height={440} /> : "No Data Found"}
+            <MTable attendance={loadedAttend} columns={columns} height={440} />
           </div>
-        )}
+        ) : "Something is wrong"}
       </div>
     </div>
   );
