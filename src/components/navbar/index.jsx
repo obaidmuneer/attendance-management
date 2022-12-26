@@ -28,7 +28,7 @@ const pages = [
     title: "Add Student",
   },
   {
-    path: "/student",
+    path: "/students",
     title: "Student List",
   },
   {

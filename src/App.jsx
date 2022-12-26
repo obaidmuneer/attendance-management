@@ -7,7 +7,7 @@ import Attendance from "./components/attendance";
 import Home from "./components/home";
 import Navbar from "./components/navbar";
 import QrCode from "./components/qrcode";
-import Student from "./components/student";
+import Students from "./components/students";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./App.css";
@@ -50,9 +50,11 @@ const App = () => {
           <Routes>
             <Route path="/" element={<QrCode api={api} />} />
             <Route path="home" element={<Home api={api} />} />
-            <Route path="student" element={<Student api={api} />} />
+            <Route path="students" element={<Students api={api} />} />
             <Route path="add_student" element={<AddStudent api={api} />} />
-            <Route path="attendance" element={<Attendance api={api} />} />
+            <Route path="attendance" element={<Attendance api={api} />} >
+
+            </Route>
             <Route path="add_class" element={<AddClass api={api} />} />
           </Routes>
         </div>
