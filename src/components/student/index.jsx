@@ -1,43 +1,92 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import MTable from "../../ui-components/mtable";
-import Loader from "../../ui-components/loader";
+import { useEffect, useState, useContext } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom"
 
-const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "fathername", label: "Father Name", minWidth: 170 },
-  { id: "roll", label: "Roll Number", minWidth: 170 },
-  { id: "contact", label: "Phone Number", minWidth: 170 },
-  { id: "course", label: "Course", minWidth: 170 },
-  // { id: "picture", label: "Photo", minWidth: 170 },
-];
+import axios from "axios";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
+import MCard from "../../ui-components/mcard";
+import Grid from "@mui/material/Grid";
+import { GlobalContext } from "../../context/context";
 
 const Student = ({ api }) => {
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
+  const [roll, setRoll] = useState("");
+  const [student, setStudent] = useState(null);
+  const navigate = useNavigate()
+  const { state, dispatch } = useContext(GlobalContext)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     axios
-      .get(`${api}/students`)
+      .get(`${api}/students/${roll}`)
       .then((res) => {
-        // console.log(res.data.data);
-        setStudents(res.data.data);
-        setLoading(false);
+        setStudent(res.data.student);
+        dispatch({
+          type: "student",
+          payload: res.data.student
+        })
+        navigate(`attendance/${roll}`)
       })
       .catch((err) => {
-        setStudents(null);
-        setLoading(false);
+        console.error(err);
       });
+    console.log(student);
+  };
 
-    // eslint-disable-next-line
-  }, []);
+
+  useEffect(() => {
+    document.querySelector('#standard-number').focus()
+  }, [])
 
   return (
     <div>
-      {
-        loading ? <Loader loading={loading} /> : <MTable students={students} columns={columns} height={'80vh'} />
-      }
-    </div>
-  );
-};
+      <Grid container spacing={2}
+        justifyContent="space-around"
+        alignItems="center"
+        mt={1}
+      >
+        <Grid item xs={'auto'} >
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+              display: "flex",
+              alignItems: "center",
+              mr: 1,
+            }}
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              id="standard-number"
+              label="Please enter a roll number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              onChange={(e) => setRoll(+e.target.value)}
+              value={roll}
+            />
+            <Button type="submit" variant="contained" size="medium">
+              Submit
+            </Button>
+          </Box>
+        </Grid>
 
-export default Student;
+        {student && student.isClassAssign && (
+          <Grid item xs={'auto'}>
+            <Link to={`profile/${student.roll}`} >
+              <MCard student={student} />
+            </Link>
+          </Grid>
+        )}
+      </Grid>
+      <Outlet />
+    </div>
+  )
+}
+
+export default Student
