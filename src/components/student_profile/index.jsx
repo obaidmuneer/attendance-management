@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -34,6 +34,7 @@ const StudentProfile = ({ api }) => {
   const { state, dispatch } = useContext(GlobalContext)
   const [claxx, setClaxx] = useState([])
   const { studentRoll } = useParams();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -50,12 +51,12 @@ const StudentProfile = ({ api }) => {
   });
 
   const handleSubmit = async () => {
-    console.log('hi');
     const result = await axios.put(`${api}/students/profile/${state.student.roll}`, {
       ...formik.values,
       course: state.student?.class.course,
       batch: state.student?.class.batch
     });
+    navigate(-1)
   };
 
   useEffect(() => {
@@ -122,7 +123,7 @@ const StudentProfile = ({ api }) => {
               <MenuItem value={state?.student?.class.section}>{state?.student?.class.section}</MenuItem>
               {
                 claxx.map((item, index) => {
-                  return item.section !== state?.student?.class.section && <MenuItem value={item.section}>{item.section}</MenuItem>
+                  return item.section !== state?.student?.class.section && <MenuItem key={index} value={item.section}>{item.section}</MenuItem>
                 })
               }
 
