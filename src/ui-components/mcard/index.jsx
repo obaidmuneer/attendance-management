@@ -46,11 +46,11 @@ function mStringAvatar(name) {
 }
 
 
-export default function MCard({ student, claxx }) {
+export default function MCard({ student, claxx, handle }) {
 
   const mwidth = claxx ? 350 : 270
   return (
-    <CardActionArea sx={{ width: mwidth }} >
+    <CardActionArea sx={{ width: mwidth }} onClick={handle}>
       <Card sx={{ maxWidth: mwidth }}>
         <Stack direction="row" sx={{ alignItems: "center" }} spacing={2}>
           <Grid container
