@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import Dashboard from "../dasboard"
 import MCard from '../../ui-components/mcard';
 import MSkeletonCard from "../../ui-components/mskeletoncard";
+import TeacherAssignedStudent from "../teacher_assigned_student";
 
 const Home = ({ api }) => {
     const [topStudents, setTopStudents] = useState([])
@@ -99,7 +100,7 @@ const Home = ({ api }) => {
                     {
                         claxxex.map((claxx, index) => {
                             return <Grid xs={'auto'} sm={'auto'} md={'auto'} item key={index}>
-                                <MCard claxx={claxx} />
+                                <TeacherAssignedStudent api={api} claxx={claxx}/>
                             </Grid>
                         })
                     }
