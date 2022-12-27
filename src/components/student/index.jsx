@@ -1,14 +1,14 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom"
-
 import axios from "axios";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 
 import MCard from "../../ui-components/mcard";
-import Grid from "@mui/material/Grid";
+import MPopover from "../../ui-components/mpopover";
 import { GlobalContext } from "../../context/context";
 
 const Student = ({ api }) => {
@@ -19,6 +19,7 @@ const Student = ({ api }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(window.location.pathname.split('/')[2]);
     axios
       .get(`${api}/students/${roll}`)
       .then((res) => {
@@ -78,8 +79,10 @@ const Student = ({ api }) => {
 
         {student && student.isClassAssign && (
           <Grid item xs={'auto'}>
-            <Link to={`profile/${student.roll}`} >
-              <MCard student={student} />
+            <Link to={`profile/${student.roll}`} style={{ textDecoration: "inherit" }}>
+              <MPopover msg={"Click to Update"} >
+                <MCard student={student} />
+              </MPopover>
             </Link>
           </Grid>
         )}
