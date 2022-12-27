@@ -26,6 +26,7 @@ export default function MPopover({ msg, children }) {
                 {children}
             </Typography>
             <Popover
+                disableScrollLock
                 id="mouse-over-popover"
                 sx={{
                     pointerEvents: 'none',
@@ -35,11 +36,11 @@ export default function MPopover({ msg, children }) {
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',
-                  }}
-                  transformOrigin={{
+                }}
+                transformOrigin={{
                     vertical: 'top',
                     horizontal: 'left',
-                  }}
+                }}
                 onClose={handlePopoverClose}
                 disableRestoreFocus
             >
