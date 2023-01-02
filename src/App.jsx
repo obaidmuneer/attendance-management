@@ -17,6 +17,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import "./App.css";
 import StudentProfile from "./components/student_profile";
+import ApproveStudents from "./components/approve_students";
 
 let api = "";
 if (window.location.protocol === "http:") {
@@ -54,10 +55,11 @@ const App = () => {
           <Navbar />
 
           <Routes>
-            <Route path="/" element={<QrCode api={api} />} />
+            <Route path="/" index element={<QrCode api={api} />} />
             <Route path="home" element={<Home api={api} />} />
             <Route path="students" element={<Students api={api} />} />
             <Route path="add_student" element={<AddStudent api={api} />} />
+            <Route path="approve_students" element={<ApproveStudents api={api} />} />
             <Route path="student" element={<Student api={api} />} >
               <Route path="attendance/:studentRoll" index element={<Attendance api={api} />} />
               <Route path="profile/:studentRoll" element={<StudentProfile api={api} />} />
