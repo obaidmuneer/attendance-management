@@ -22,25 +22,55 @@ const pages = [
   {
     path: "/add_class",
     title: "Add Class",
+  }
+];
+
+const subPages = [
+  {
+    path: "/students",
+    title: "All Students",
+  },
+  {
+    path: "/student",
+    title: "Student Info",
   },
   {
     path: "/add_student",
     title: "Add Student",
   },
   {
-    path: "/students",
-    title: "Student List",
+    path: "/",
+    title: "Add Students",
   },
   {
-    path: "/student",
-    title: "Student",
+    path: "/approve_students",
+    title: "Approve Students",
   },
 ];
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElNavSub, setAnchorElNavSub] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpenNavSubMenu = (event) => {
+    setAnchorElNavSub(event.currentTarget);
+  };
+
+  const handleCloseNavSubMenu = () => {
+    setAnchorElNavSub(null);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -121,6 +151,35 @@ const Navbar = () => {
                   </Typography>
                 </MenuItem>
               ))}
+              <MenuItem onClick={handleOpenNavSubMenu}>Students</MenuItem>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorElNavSub}
+                keepMounted
+                open={Boolean(anchorElNavSub)}
+                onClose={handleCloseNavSubMenu}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                {subPages.map((page, index) => (
+                  <MenuItem key={index} onClick={handleCloseNavSubMenu}>
+                    <Typography textAlign="center">
+                      <Link
+                        style={{ textDecoration: "inherit", color: "inherit" }}
+                        to={page.path}
+                      >
+                        {page.title}
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -157,6 +216,32 @@ const Navbar = () => {
                 </Button>
               </Link>
             ))}
+            <Button
+              onClick={handleClick}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Student
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {subPages.map((page, index) => (
+                <MenuItem key={index} onClick={handleClose}>
+                  <Typography textAlign="center">
+                    <Link
+                      style={{ textDecoration: "inherit", color: "inherit" }}
+                      to={page.path}
+                    >
+                      {page.title}
+                    </Link>
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>
 
           {/* <Box sx={{ flexGrow: 0 }}>
