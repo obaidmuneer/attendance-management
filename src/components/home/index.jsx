@@ -37,8 +37,18 @@ const Home = ({ api }) => {
         // eslint-disable-next-line
     }, [])
 
+    const loginHandler = () => {
+        console.log('hi');
+    }
+
+
     return (
         <div>
+            {/* <form onSubmit={loginHandler} >
+                <input type="number" value={77673} />
+                <input type="text" value={56789} />
+                <button type="submit" >Click me</button>
+            </form> */}
             <Dashboard api={api} />
 
 
