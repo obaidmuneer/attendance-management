@@ -188,10 +188,10 @@ const Navbar = () => {
                 </Button>
               </Link>
             ))}
-            {/* <MMenu title={'Class'} pages={classSubPages} /> */}
-            {/* <MMenu title={'Student'} pages={studentSubPages} /> */}
-            <MMenuV2 title={'Class'} pages={classSubPages} />
-            <MMenuV2 title={'Student'} pages={studentSubPages} />
+            <MMenu title={'Class'} pages={classSubPages} />
+            <MMenu title={'Student'} pages={studentSubPages} />
+            {/* <MMenuV2 title={'Class'} pages={classSubPages} />
+            <MMenuV2 title={'Student'} pages={studentSubPages} /> */}
           </Box>
 
           {/* <Box sx={{ flexGrow: 0 }}>

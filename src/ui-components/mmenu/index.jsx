@@ -40,7 +40,7 @@ export default function MMenu({ title, pages, nav, closeMenu }) {
                 onClose={handleCloseMenu}
 
                 anchorOrigin={{
-                    vertical: nav ? 'top' : 'bottom',
+                    vertical: nav ? 'top':'bottom',
                     horizontal: 'right',
                 }}
                 transformOrigin={{
