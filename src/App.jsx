@@ -18,6 +18,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 import StudentProfile from "./components/student_profile";
 import ApproveStudents from "./components/approve_students";
+import AddStudents from "./components/add_students";
+import AddClasses from "./components/add_classes";
 
 let api = "";
 if (window.location.protocol === "http:") {
@@ -59,12 +61,14 @@ const App = () => {
             <Route path="home" element={<Home api={api} />} />
             <Route path="students" element={<Students api={api} />} />
             <Route path="add_student" element={<AddStudent api={api} />} />
+            <Route path="add_students" element={<AddStudents api={api} />} />
             <Route path="approve_students" element={<ApproveStudents api={api} />} />
             <Route path="student" element={<Student api={api} />} >
               <Route path="attendance/:studentRoll" index element={<Attendance api={api} />} />
               <Route path="profile/:studentRoll" element={<StudentProfile api={api} />} />
             </Route>
             <Route path="add_class" element={<AddClass api={api} />} />
+            <Route path="add_classes" element={<AddClasses api={api} />} />
           </Routes>
         </div>
       </div>
