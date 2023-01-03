@@ -172,7 +172,7 @@ const Attendance = ({ api }) => {
         {loadedAttend.length > 0 ? (
           <div>
             <h2>Student's Attendance Detail</h2>
-            <MTable attendance={loadedAttend} columns={columns} height={440} />
+            <MTable data={loadedAttend} columns={columns} height={440} />
           </div>
         ) : "Something is wrong"}
       </div>

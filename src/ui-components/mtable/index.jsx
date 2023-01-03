@@ -8,8 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-export default function MTable({ students, attendance, columns , height }) {
-  const rows = students || attendance;
+export default function MTable({ data, columns, height }) {
+  const rows = data;
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -42,7 +42,7 @@ export default function MTable({ students, attendance, columns , height }) {
           </TableHead>
           <TableBody>
             {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
