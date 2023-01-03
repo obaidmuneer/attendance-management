@@ -55,7 +55,7 @@ const ApproveStudents = ({ api }) => {
     const handleSubmit = async () => {
         const { batch, section, course } = formik.values;
         // console.log(data);
-        const result = await axios.put(`${api}/students/bulk`, {
+        const result = await axios.put(`${api}/students/approve/bulk`, {
             batch,
             section,
             course,
@@ -75,7 +75,12 @@ const ApproveStudents = ({ api }) => {
         })
     }
     return (
-        <div>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mt: 2
+        }}>
             <Typography variant="h6">Approve Bulk of Students</Typography>
             <Box
                 component="form"
@@ -144,7 +149,7 @@ const ApproveStudents = ({ api }) => {
                 </Button>
             </Box>
 
-        </div>
+        </Box>
     )
 }
 
