@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 
 import ThemeSwitch from "../../themes/theme_switch"
 import MMenu from "../../ui-components/mmenu";
+import MMenuV2 from "../../ui-components/mmenuv2";
 
 const pages = [
   {
@@ -68,15 +69,6 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [anchorElNavSub, setAnchorElNavSub] = React.useState(null);
-
-  const handleOpenNavSubMenu = (event) => {
-    setAnchorElNavSub(event.currentTarget);
-  };
-
-  const handleCloseNavSubMenu = () => {
-    setAnchorElNavSub(null);
-  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -196,9 +188,10 @@ const Navbar = () => {
                 </Button>
               </Link>
             ))}
-            <MMenu title={'Class'} pages={classSubPages} />
-            <MMenu title={'Student'} pages={studentSubPages} />
-
+            {/* <MMenu title={'Class'} pages={classSubPages} /> */}
+            {/* <MMenu title={'Student'} pages={studentSubPages} /> */}
+            <MMenuV2 title={'Class'} pages={classSubPages} />
+            <MMenuV2 title={'Student'} pages={studentSubPages} />
           </Box>
 
           {/* <Box sx={{ flexGrow: 0 }}>
