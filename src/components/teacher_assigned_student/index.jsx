@@ -30,7 +30,6 @@ const columns = [
     { id: "roll", label: "Roll Number", minWidth: 120 },
     { id: "contact", label: "Phone no", minWidth: 120 },
     { id: "course", label: "Course", minWidth: 120 },
-    // { id: "picture", label: "Photo", minWidth: 120 },
 ];
 
 
@@ -71,7 +70,7 @@ export default function TeacherAssignedStudent({ api, claxx }) {
                     </Stack>
 
                     {
-                        students.length > 0 ? <MTable students={students} columns={columns} height={'80vh'} /> :
+                        students?.length > 0 ? <MTable data={students} columns={columns} height={'80vh'} /> :
                             <Typography id="modal-modal-description">
                                 No Students Found
                             </Typography>
