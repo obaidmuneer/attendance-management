@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import readXlsxFile from 'read-excel-file'
 
 import axios from "axios";
@@ -16,6 +16,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import MTextField from "../../ui-components/mtextfield";
+import AsyncSelect from '../../ui-components/async_select';
+import SelectSection from '../select_section';
 
 const validationSchema = yup.object({
     batch: yup
@@ -32,6 +34,17 @@ const validationSchema = yup.object({
 
 const ApproveStudents = ({ api }) => {
     const [data, setData] = useState([])
+    const [lists, setLists] = useState([])
+    const [course, setCourse] = useState('')
+    const [batches, setBatches] = useState([])
+    const [selectedBatch, setSelectedBatch] = useState('')
+    const [section, setSection] = useState('')
+
+    const handleSectionChange = (e) => {
+        // console.log(e.target.value);
+        setSection(e.target.value)
+    }
+
     const formik = useFormik({
         initialValues: {
             batch: "",
@@ -74,6 +87,24 @@ const ApproveStudents = ({ api }) => {
             console.log(data);
         })
     }
+
+    useEffect(() => {
+        axios.get(`${api}/classes`).then(res => {
+            setLists(res.data.data)
+            console.log(res.data.data);
+            // console.log(res.data.data);
+        })
+    }, [])
+
+    const getBatch = () => {
+        axios.get(`${api}/classes/${course}`)
+            .then(res => {
+                console.log(res.data.data);
+                setBatches(res.data.data)
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <Box sx={{
             display: 'flex',
@@ -148,6 +179,15 @@ const ApproveStudents = ({ api }) => {
                     Submit
                 </Button>
             </Box>
+            {/* <AsyncSelect lists={lists} selectData={setCourse} label="Select Course" flag={true} callback={getBatch} />
+            {
+                course && <AsyncSelect lists={batches} selectData={setSelectedBatch} label="Select Batch No" />
+            }
+            {
+                (course.toLowerCase() === batches[0]?.course.toLowerCase()) &&
+                selectedBatch &&
+                <SelectSection classData={batches} selectedBatch={selectedBatch} label="Select Section" handleChange={handleSectionChange} handleValue={section} />
+            } */}
 
         </Box>
     )
