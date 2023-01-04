@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 
-export default function AsyncSelectBatch({ api, std, selectbatch, selectClass }) {
+export default function AsyncSelect({ selectData, lists, label, flag, callback }) {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const loading = open && options.length === 0;
@@ -14,8 +13,7 @@ export default function AsyncSelectBatch({ api, std, selectbatch, selectClass })
         if (!loading) {
             return undefined;
         }
-        getClass(std);
-
+        uniq(lists)
         // eslint-disable-next-line
     }, [loading]);
 
@@ -25,18 +23,9 @@ export default function AsyncSelectBatch({ api, std, selectbatch, selectClass })
         }
     }, [open]);
 
-    const getClass = (std) => {
-        axios.get(`${api}/classes/${std.course}`)
-            .then(res => {
-                selectClass(res.data.data)
-                uniq(res.data.data)
-            })
-            .catch(err => console.log(err))
-    }
-
     const uniq = (data) => {
         const a = data.map((item) => {
-            return item.batch
+            return flag ? item.course : item.batch
         })
         const uniqArr = [...new Set(a)];
         setOptions(uniqArr)
@@ -57,11 +46,16 @@ export default function AsyncSelectBatch({ api, std, selectbatch, selectClass })
             getOptionLabel={(option) => option}
             options={options}
             loading={loading}
-            onChange={(e) => selectbatch(e.target.textContent)}
+            onChange={(e) => {
+                selectData(e.target.textContent)
+            }}
+            onSelect={() => flag && callback()}
+            
+            // onSele
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Select Batch No"
+                    label={label}
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (
