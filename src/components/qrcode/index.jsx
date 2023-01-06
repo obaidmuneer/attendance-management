@@ -38,8 +38,8 @@ const Attendance = () => {
       //   }, 3000);
       // console.log(result.data.student);
     } catch (error) {
-      console.log(error.message);
-      setMsg(error.message);
+      console.log(error.response.data.msg)
+      setMsg(error.response.data.msg);
       //   setTimeout(() => {
       //     setMsg(null);
       //     setRoll("");
