@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import axios from "axios";
 
 import Box from '@mui/material/Box';
@@ -10,17 +10,20 @@ import Dashboard from "../dasboard"
 import MCard from '../../ui-components/mcard';
 import MSkeletonCard from "../../ui-components/mskeletoncard";
 import TeacherAssignedStudent from "../teacher_assigned_student";
+import { GlobalContext } from "../../context/context";
 
-const Home = ({ api }) => {
-    const [topStudents, setTopStudents] = useState([])
-    const [checkStudents, setCheckStudents] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [loadingClaxx, setLoadingClaxx] = useState(true)
-    const [claxxex, setClaxxex] = useState([])
+
+const Home = () => {
+    const { state } = useContext(GlobalContext);
+    const [topStudents, setTopStudents] = useState([]);
+    const [checkStudents, setCheckStudents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [loadingClaxx, setLoadingClaxx] = useState(true);
+    const [claxxex, setClaxxex] = useState([]);
 
 
     useEffect(() => {
-        axios.get(`${api}/attendance/top_std`)
+        axios.get(`${state.api}/attendance/top_std`)
             .then(res => {
                 setTopStudents(res.data.topStudents)
                 setCheckStudents(res.data.checkStudents)
@@ -29,7 +32,7 @@ const Home = ({ api }) => {
 
             })
 
-        axios.get(`${api}/classes`).then(res => {
+        axios.get(`${state.api}/classes`).then(res => {
             // console.log(res.data.data)
             setClaxxex(res.data.data)
             setLoadingClaxx(false)
@@ -49,7 +52,7 @@ const Home = ({ api }) => {
                 <input type="text" value={56789} />
                 <button type="submit" >Click me</button>
             </form> */}
-            <Dashboard api={api} />
+            <Dashboard api={state.api} />
 
 
             {loading ? <MSkeletonCard arrLength={2} /> : <Box sx={{ flexGrow: 1 }} >
@@ -110,7 +113,7 @@ const Home = ({ api }) => {
                     {
                         claxxex.map((claxx, index) => {
                             return <Grid xs={'auto'} sm={'auto'} md={'auto'} item key={index}>
-                                <TeacherAssignedStudent api={api} claxx={claxx}/>
+                                <TeacherAssignedStudent api={state.api} claxx={claxx} />
                             </Grid>
                         })
                     }

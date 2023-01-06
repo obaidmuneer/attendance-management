@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import readXlsxFile from 'read-excel-file'
 
 import axios from "axios";
@@ -18,6 +18,7 @@ import Typography from "@mui/material/Typography";
 import MTextField from "../../ui-components/mtextfield";
 import AsyncSelect from '../../ui-components/async_select';
 import SelectSection from '../select_section';
+import { GlobalContext } from '../../context/context';
 
 const validationSchema = yup.object({
     batch: yup
@@ -32,7 +33,8 @@ const validationSchema = yup.object({
 });
 
 
-const ApproveStudents = ({ api }) => {
+const ApproveStudents = () => {
+    const { state } = useContext(GlobalContext)
     const [data, setData] = useState([])
     const [lists, setLists] = useState([])
     const [course, setCourse] = useState('')
@@ -68,7 +70,7 @@ const ApproveStudents = ({ api }) => {
     const handleSubmit = async () => {
         const { batch, section, course } = formik.values;
         // console.log(data);
-        const result = await axios.put(`${api}/students/approve/bulk`, {
+        const result = await axios.put(`${state.api}/students/approve/bulk`, {
             batch,
             section,
             course,
@@ -89,15 +91,14 @@ const ApproveStudents = ({ api }) => {
     }
 
     useEffect(() => {
-        axios.get(`${api}/classes`).then(res => {
+        axios.get(`${state.api}/classes`).then(res => {
             setLists(res.data.data)
-            console.log(res.data.data);
             // console.log(res.data.data);
         })
     }, [])
 
     const getBatch = () => {
-        axios.get(`${api}/classes/${course}`)
+        axios.get(`${state.api}/classes/${course}`)
             .then(res => {
                 console.log(res.data.data);
                 setBatches(res.data.data)

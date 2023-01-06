@@ -11,17 +11,17 @@ import MCard from "../../ui-components/mcard";
 import MPopover from "../../ui-components/mpopover";
 import { GlobalContext } from "../../context/context";
 
-const Student = ({ api }) => {
+const Student = () => {
+  const { state, dispatch } = useContext(GlobalContext)
   const [roll, setRoll] = useState("");
   const [student, setStudent] = useState(null);
   const navigate = useNavigate()
-  const { state, dispatch } = useContext(GlobalContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(window.location.pathname.split('/')[2]);
     axios
-      .get(`${api}/students/${roll}`)
+      .get(`${state.api}/students/${roll}`)
       .then((res) => {
         setStudent(res.data.student);
         dispatch({

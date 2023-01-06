@@ -1,7 +1,7 @@
+import { useContext } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -13,6 +13,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import MTextField from "../../ui-components/mtextfield";
+import { GlobalContext } from "../../context/context";
 
 const validationSchema = yup.object({
   name: yup
@@ -29,7 +30,8 @@ const validationSchema = yup.object({
   pic: yup.mixed(),
 });
 
-const AddStudent = ({ api }) => {
+const AddStudent = () => {
+  const { state } = useContext(GlobalContext)
 
   const formik = useFormik({
     initialValues: {
@@ -61,7 +63,7 @@ const AddStudent = ({ api }) => {
     const { name, fathername, contact, cnic, course, pic } = formik.values;
     console.log(Boolean(pic));
 
-    const result = await axios.post(`${api}/students`, {
+    const result = await axios.post(`${state.api}/students`, {
       name,
       fathername,
       contact,
@@ -76,7 +78,7 @@ const AddStudent = ({ api }) => {
       // console.log(formData);
 
       const imgResult = await axios.put(
-        `${api}/students/img/${result.data.data.roll}`,
+        `${state.api}/students/img/${result.data.data.roll}`,
         formData,
         {
           headers: {

@@ -1,14 +1,15 @@
-import { Typography, Box, TextField } from "@mui/material";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import moment from "moment";
-import { useState, useEffect } from "react";
 import { QrReader } from "react-qr-reader";
+import { Typography, Box, TextField } from "@mui/material";
 
 import sucessAudio from "../../assets/sucess_beep.mp3";
-
+import { GlobalContext } from "../../context/context";
 import "./index.css";
 
-const Attendance = ({ api }) => {
+const Attendance = () => {
+  const { state } = useContext(GlobalContext);
   const [roll, setRoll] = useState("");
   const [student, setStudent] = useState(null);
   const [msg, setMsg] = useState(null);
@@ -22,7 +23,7 @@ const Attendance = ({ api }) => {
   const handleAttendance = async (roll_num) => {
     console.log(roll);
     try {
-      const result = await axios.post(`${api}/attendance/${roll_num || roll}`, {
+      const result = await axios.post(`${state.api}/attendance/${roll_num || roll}`, {
         marked_attendance: "present",
         selected_date: moment(Date.now()).format("MMM Do YY"),
       });

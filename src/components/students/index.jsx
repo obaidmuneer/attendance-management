@@ -1,5 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+
+import { GlobalContext } from "../../context/context";
+
 import MTable from "../../ui-components/mtable";
 import Loader from "../../ui-components/loader";
 
@@ -12,12 +15,13 @@ const columns = [
   // { id: "picture", label: "Photo", minWidth: 170 },
 ];
 
-const Students = ({ api }) => {
+const Students = () => {
+  const { state } = useContext(GlobalContext)
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
-      .get(`${api}/students`)
+      .get(`${state.api}/students`)
       .then((res) => {
         // console.log(res.data.data);
         setStudents(res.data.data);

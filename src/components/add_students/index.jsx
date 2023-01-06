@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import readXlsxFile from 'read-excel-file'
 
 import axios from "axios";
@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 
 import MTextField from "../../ui-components/mtextfield";
 import MTable from "../../ui-components/mtable";
+import { GlobalContext } from '../../context/context';
 
 const validationSchema = yup.object({
     batch: yup
@@ -39,7 +40,8 @@ const columns = [
     // { id: "picture", label: "Photo", minWidth: 170 },
 ];
 
-const AddStudents = ({ api }) => {
+const AddStudents = () => {
+    const { state } = useContext(GlobalContext)
     const [data, setData] = useState([])
     const formik = useFormik({
         initialValues: {
@@ -64,7 +66,7 @@ const AddStudents = ({ api }) => {
     const handleSubmit = async () => {
         const { batch, section, course } = formik.values;
         // // console.log(data);
-        const result = await axios.post(`${api}/students/add/bulk`, {
+        const result = await axios.post(`${state.api}/students/add/bulk`, {
             batch,
             section,
             course,

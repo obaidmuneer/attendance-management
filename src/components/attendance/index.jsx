@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 
 import Loader from "../../ui-components/loader";
 import MTable from "../../ui-components/mtable";
+import { GlobalContext } from "../../context/context";
 
 const columns = [
   { id: "selected_date", label: "Date", minWidth: 170 },
   { id: "marked_attendance", label: "Attendance Status", minWidth: 170 },
 ];
 
-const Attendance = ({ api }) => {
+const Attendance = () => {
+  const { state } = useContext(GlobalContext)
   const [students, setStudents] = useState([]);
   const [roll, setRoll] = useState("");
   const [student, setStudent] = useState(null);
@@ -29,7 +31,7 @@ const Attendance = ({ api }) => {
     e.preventDefault();
     console.log(marked_attendance);
     axios
-      .post(`${api}/attendance/${student.roll}`, {
+      .post(`${state.api}/attendance/${student.roll}`, {
         marked_attendance,
         selected_date,
       })
@@ -42,7 +44,7 @@ const Attendance = ({ api }) => {
   const loadStudents = () => {
     // console.log(e.target.value);
     axios
-      .post(`${api}/attendance/${selectedCourse}`, {
+      .post(`${state.api}/attendance/${selectedCourse}`, {
         batch: selectedBatch,
         section: selectedSec,
       })
@@ -57,7 +59,7 @@ const Attendance = ({ api }) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${api}/attendance/${studentRoll}`)
+      .get(`${state.api}/attendance/${studentRoll}`)
       .then((res) => {
         setLoading(false);
         setLoadedAttend(res.data.attendance);
@@ -71,7 +73,7 @@ const Attendance = ({ api }) => {
 
   const getClass = () => {
     axios
-      .get(`${api}/get_class/${selectedCourse}`)
+      .get(`${state.api}/get_class/${selectedCourse}`)
       .then((res) => {
         setClassData(res.data.data);
       })

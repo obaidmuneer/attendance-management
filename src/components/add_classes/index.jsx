@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import readXlsxFile from 'read-excel-file'
 
 import MTable from "../../ui-components/mtable";
@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { GlobalContext } from '../../context/context';
 
 const columns = [
     { id: "teacher", label: "Teacher Name", minWidth: 170 },
@@ -19,11 +20,12 @@ const columns = [
     { id: "classSchedule", label: "class Schedule", minWidth: 170 },
 ];
 
-const AddClasses = ({ api }) => {
+const AddClasses = () => {
+    const { state } = useContext(GlobalContext)
     const [data, setData] = useState([])
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await axios.post(`${api}/classes/add/bulk`, { data })
+        const result = await axios.post(`${state.api}/classes/add/bulk`, { data })
         console.log(result.data);
     };
 

@@ -30,7 +30,7 @@ const validationSchema = yup.object({
     .required("Section is required i.e Select A, B"),
 });
 
-const StudentProfile = ({ api }) => {
+const StudentProfile = () => {
   const { state, dispatch } = useContext(GlobalContext)
   const [claxx, setClaxx] = useState([])
   const { studentRoll } = useParams();
@@ -51,7 +51,7 @@ const StudentProfile = ({ api }) => {
   });
 
   const handleSubmit = async () => {
-    const result = await axios.put(`${api}/students/profile/${state.student.roll}`, {
+    const result = await axios.put(`${state.api}/students/profile/${state.student.roll}`, {
       ...formik.values,
       course: state.student?.class.course,
       batch: state.student?.class.batch
@@ -60,7 +60,7 @@ const StudentProfile = ({ api }) => {
   };
 
   useEffect(() => {
-    axios.get(`${api}/classes/${state.student?.class.course}/${state.student?.class.batch}`)
+    axios.get(`${state.api}/classes/${state.student?.class.course}/${state.student?.class.batch}`)
       .then(res => setClaxx(res.data.data))
   }, [])
 

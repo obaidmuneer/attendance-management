@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import moment from "moment/moment";
 
 import MTextField from "../../ui-components/mtextfield";
+import { useContext } from "react";
+import { GlobalContext } from "../../context/context";
 
 const validationSchema = yup.object({
   teacher: yup
@@ -26,7 +28,8 @@ const validationSchema = yup.object({
     .required("Section name is required i.e MWF , TTS , Weekdays"),
 });
 
-const AddClass = ({ api }) => {
+const AddClass = () => {
+  const { state } = useContext(GlobalContext)
   const formik = useFormik({
     initialValues: {
       teacher: "",
@@ -77,7 +80,7 @@ const AddClass = ({ api }) => {
         course,
         batch,
       };
-      const result = await axios.post(`${api}/classes`, data);
+      const result = await axios.post(`${state.api}/classes`, data);
       console.log(result.data);
     } catch (error) {
       console.log(error.message);

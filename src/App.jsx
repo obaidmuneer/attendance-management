@@ -21,15 +21,6 @@ import ApproveStudents from "./components/approve_students";
 import AddStudents from "./components/add_students";
 import AddClasses from "./components/add_classes";
 
-let api = "";
-if (window.location.protocol === "http:") {
-  api = "http://localhost:8080";
-} else {
-  // api = "https://attendance-management-server.up.railway.app";
-  api = "https://helpful-earmuffs-cod.cyclic.app";
-
-}
-
 const App = () => {
   let { state, dispatch } = useContext(GlobalContext);
   // console.log(state);
@@ -52,26 +43,23 @@ const App = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
 
-      <div className="App">
-        <div className="App-container">
-          <Navbar />
+      <Navbar />
 
-          <Routes>
-            <Route path="/" index element={<QrCode api={api} />} />
-            <Route path="home" element={<Home api={api} />} />
-            <Route path="students" element={<Students api={api} />} />
-            <Route path="add_student" element={<AddStudent api={api} />} />
-            <Route path="add_students" element={<AddStudents api={api} />} />
-            <Route path="approve_students" element={<ApproveStudents api={api} />} />
-            <Route path="student" element={<Student api={api} />} >
-              <Route path="attendance/:studentRoll" index element={<Attendance api={api} />} />
-              <Route path="profile/:studentRoll" element={<StudentProfile api={api} />} />
-            </Route>
-            <Route path="add_class" element={<AddClass api={api} />} />
-            <Route path="add_classes" element={<AddClasses api={api} />} />
-          </Routes>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" index element={<QrCode />} />
+        <Route path="home" element={<Home />} />
+        <Route path="students" element={<Students />} />
+        <Route path="add_student" element={<AddStudent />} />
+        <Route path="add_students" element={<AddStudents />} />
+        <Route path="approve_students" element={<ApproveStudents />} />
+        <Route path="student" element={<Student />} >
+          <Route path="attendance/:studentRoll" index element={<Attendance />} />
+          <Route path="profile/:studentRoll" element={<StudentProfile />} />
+        </Route>
+        <Route path="add_class" element={<AddClass />} />
+        <Route path="add_classes" element={<AddClasses />} />
+      </Routes>
+
     </ThemeProvider>
   );
 };
