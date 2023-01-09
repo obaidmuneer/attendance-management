@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import readXlsxFile from 'read-excel-file'
 
 import axios from "axios";
@@ -18,6 +18,9 @@ import Typography from "@mui/material/Typography";
 import MTextField from "../../ui-components/mtextfield";
 import MTable from "../../ui-components/mtable";
 import { GlobalContext } from '../../context/context';
+import AsyncSelect from '../../ui-components/async_select';
+import MModal from '../../ui-components/MModal';
+import img from '../../assets/img/add-students-ss.png'
 
 const validationSchema = yup.object({
     batch: yup
@@ -26,9 +29,9 @@ const validationSchema = yup.object({
     section: yup
         .string("Enter Section Name")
         .required("Section name is required i.e A, B"),
-    course: yup
-        .string()
-        .required("Course name is required i.e Select WEB, AI-Chatbot"),
+    // course: yup
+    //     .string()
+    //     .required("Course name is required i.e Select WEB, AI-Chatbot"),
 });
 
 const columns = [
@@ -43,11 +46,22 @@ const columns = [
 const AddStudents = () => {
     const { state } = useContext(GlobalContext)
     const [data, setData] = useState([])
+    const [lists, setLists] = useState([])
+    const [course, setCourse] = useState('')
+    const [isCard, setIsCard] = useState(true)
+
+    useEffect(() => {
+        axios.get(`${state.api}/classes`).then(res => {
+            setLists(res.data.data)
+            // console.log(res.data.data);
+        })
+    }, [])
+
     const formik = useFormik({
         initialValues: {
             batch: "",
             section: "",
-            course: "",
+            // course: "",
         },
         validationSchema,
         onSubmit: (values, actions) => {
@@ -57,14 +71,14 @@ const AddStudents = () => {
                 values: {
                     batch: formik.values.batch,
                     section: formik.values.section,
-                    course: formik.values.course,
+                    // course: formik.values.course,
                 }
             });
         },
     });
 
     const handleSubmit = async () => {
-        const { batch, section, course } = formik.values;
+        const { batch, section } = formik.values;
         // // console.log(data);
         const result = await axios.post(`${state.api}/students/add/bulk`, {
             batch,
@@ -105,7 +119,11 @@ const AddStudents = () => {
                 autoComplete="off"
                 onSubmit={formik.handleSubmit}
             >
+                <MModal img={img} />
+                
                 <Typography variant="h6">Add Bulk of Students</Typography>
+
+                <AsyncSelect lists={lists} selectData={setCourse} label="Select Course" />
 
                 <MTextField
                     str={"batch"}
@@ -117,8 +135,9 @@ const AddStudents = () => {
                     placeHelper="Enter Section Name"
                     formik={formik}
                 />
+
                 <Stack direction="row" alignItems="center" spacing={1}>
-                    <FormControl
+                    {/* <FormControl
                         sx={{ width: "20ch" }}
                         error={formik.touched.course && Boolean(formik.errors.course)}
                     >
@@ -138,27 +157,29 @@ const AddStudents = () => {
                         <FormHelperText>
                             {formik.touched.course && formik.errors.course}
                         </FormHelperText>
-                    </FormControl>
+                    </FormControl> */}
+
 
                     <Button variant="contained" component="label">
                         Upload Xlsx File
                         <input
-                            id="pic"
-                            name="pic"
+                            // id="pic"
+                            // name="pic"
                             type="file"
                             hidden
                             onChange={fileHandler}
                         />
                     </Button>
+                    <Button
+                        color="primary"
+                        sx={{ justifyContent: "center", mt: 1 }}
+                        variant="contained"
+                        type="submit"
+                    >
+                        Submit
+                    </Button>
                 </Stack>
-                <Button
-                    color="primary"
-                    sx={{ justifyContent: "center", mt: 1 }}
-                    variant="contained"
-                    type="submit"
-                >
-                    Submit
-                </Button>
+
             </Box>
             <div>
                 {

@@ -19,6 +19,8 @@ import MTextField from "../../ui-components/mtextfield";
 import AsyncSelect from '../../ui-components/async_select';
 import SelectSection from '../select_section';
 import { GlobalContext } from '../../context/context';
+import MModal from '../../ui-components/MModal';
+import img from '../../assets/img/approve-student-ss.png'
 
 const validationSchema = yup.object({
     batch: yup
@@ -113,6 +115,7 @@ const ApproveStudents = () => {
             alignItems: 'center',
             mt: 2
         }}>
+            <MModal img={img} givenWidth={340} />
             <Typography variant="h6">Approve Bulk of Students</Typography>
             <Box
                 component="form"
@@ -127,18 +130,22 @@ const ApproveStudents = () => {
                 autoComplete="off"
                 onSubmit={formik.handleSubmit}
             >
-                <MTextField
+                {/* <MTextField
                     str={"batch"}
                     placeHelper="Enter Batch Number"
                     formik={formik}
-                />
-                <MTextField
+                /> */}
+                <AsyncSelect lists={lists} selectData={setCourse} label="Select Course" flag={true} callback={getBatch} />
+                <AsyncSelect lists={batches} selectData={setSelectedBatch} label="Select Batch No" />
+
+
+                {/* <MTextField
                     str={"section"}
                     placeHelper="Enter Section Name"
                     formik={formik}
-                />
+                /> */}
                 <Stack direction="row" alignItems="center" spacing={1}>
-                    <FormControl
+                    {/* <FormControl
                         sx={{ width: "20ch" }}
                         error={formik.touched.course && Boolean(formik.errors.course)}
                     >
@@ -158,7 +165,16 @@ const ApproveStudents = () => {
                         <FormHelperText>
                             {formik.touched.course && formik.errors.course}
                         </FormHelperText>
-                    </FormControl>
+                    </FormControl> */}
+                    <SelectSection
+                        classData={batches}
+                        selectedBatch={selectedBatch}
+                        label="Select Section"
+                        handleChange={handleSectionChange}
+                        handleValue={section}
+                        givenwidth='20ch'
+                    />
+
 
                     <Button variant="contained" component="label">
                         Upload Xlsx File
@@ -180,11 +196,11 @@ const ApproveStudents = () => {
                     Submit
                 </Button>
             </Box>
-            {/* <AsyncSelect lists={lists} selectData={setCourse} label="Select Course" flag={true} callback={getBatch} />
-            {
-                course && <AsyncSelect lists={batches} selectData={setSelectedBatch} label="Select Batch No" />
-            }
-            {
+            {/* <AsyncSelect lists={lists} selectData={setCourse} label="Select Course" flag={true} callback={getBatch} /> */}
+            {/* {
+                 <AsyncSelect lists={batches} selectData={setSelectedBatch} label="Select Batch No" />
+            } */}
+            {/* {
                 (course.toLowerCase() === batches[0]?.course.toLowerCase()) &&
                 selectedBatch &&
                 <SelectSection classData={batches} selectedBatch={selectedBatch} label="Select Section" handleChange={handleSectionChange} handleValue={section} />

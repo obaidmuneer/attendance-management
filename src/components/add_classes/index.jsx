@@ -10,6 +10,9 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { GlobalContext } from '../../context/context';
+import MModal from '../../ui-components/MModal';
+import img from '../../assets/img/add-class-ss.png'
+
 
 const columns = [
     { id: "teacher", label: "Teacher Name", minWidth: 170 },
@@ -51,6 +54,7 @@ const AddClasses = () => {
             alignItems: 'center',
             mt: 2
         }}>
+            <MModal img={img} /> 
             <Typography variant="h6">Add Classes</Typography>
             <Box
                 component="form"
