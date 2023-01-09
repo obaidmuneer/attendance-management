@@ -4,7 +4,7 @@ import moment from "moment";
 import { QrReader } from "react-qr-reader";
 import { Typography, Box, TextField } from "@mui/material";
 
-import sucessAudio from "../../assets/sucess_beep.mp3";
+import sucessAudio from "../../assets/audio/sucess_beep.mp3";
 import { GlobalContext } from "../../context/context";
 import "./index.css";
 

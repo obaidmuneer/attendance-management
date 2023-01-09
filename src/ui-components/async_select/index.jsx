@@ -25,7 +25,7 @@ export default function AsyncSelect({ selectData, lists, label, flag, callback }
 
     const uniq = (data) => {
         const a = data.map((item) => {
-            return flag ? item.course : item.batch
+            return label === 'Select Course' ? item.course : item.batch
         })
         const uniqArr = [...new Set(a)];
         setOptions(uniqArr)
@@ -34,7 +34,7 @@ export default function AsyncSelect({ selectData, lists, label, flag, callback }
     return (
         <Autocomplete
             id="select-course"
-            sx={{ width: 170 }}
+            sx={{ minWidth: 120 }}
             open={open}
             onOpen={() => {
                 setOpen(true)
@@ -50,7 +50,7 @@ export default function AsyncSelect({ selectData, lists, label, flag, callback }
                 selectData(e.target.textContent)
             }}
             onSelect={() => flag && callback()}
-            
+
             // onSele
             renderInput={(params) => (
                 <TextField

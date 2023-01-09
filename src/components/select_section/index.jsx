@@ -3,10 +3,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-export default function SelectSection({ classData, selectedBatch, label, handleChange, handleValue }) {
+export default function SelectSection({ classData, selectedBatch, label, handleChange, handleValue, givenwidth }) {
 
     return (
-        <FormControl sx={{ minWidth: 150, ml: 1 }}>
+        <FormControl sx={{ minWidth: 150, ml: 1, width: givenwidth }}>
             <InputLabel id="section-select-label">{label}</InputLabel>
             <Select
                 labelId="section-select-label"
