@@ -7,7 +7,9 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import GitHubIcon from '@mui/icons-material/GitHub';
 import IconButton from "@mui/material/IconButton";
+import MLink from '@mui/material/Link';
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -18,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import ThemeSwitch from "../../themes/theme_switch"
 import MMenu from "../../ui-components/mmenu";
 import MMenuV2 from "../../ui-components/mmenuv2";
+
 
 const pages = [
   {
@@ -224,9 +227,20 @@ const Navbar = () => {
             </Menu>
           </Box> */}
 
+          <Box sx={{ mr: 1 }}>
+            <Tooltip title="My Github">
+              <IconButton>
+                <MLink href="https://github.com/obaidmuneer" color="inherit" target="_blank" rel="noopener noreferrer">
+                  <GitHubIcon fontSize="large" />
+                </MLink>
+              </IconButton>
+            </Tooltip>
+          </Box>
+
           <Box sx={{ flexGrow: 0 }}>
             <ThemeSwitch />
           </Box>
+
 
         </Toolbar>
       </Container>
