@@ -54,7 +54,7 @@ const AddClasses = () => {
             alignItems: 'center',
             mt: 2
         }}>
-            <MModal img={img} /> 
+            <MModal img={img} label='add-classes' /> 
             <Typography variant="h6">Add Classes</Typography>
             <Box
                 component="form"

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,11 +22,23 @@ const style = {
 };
 
 
-export default function MModal({img , givenWidth}) {
-    const [open, setOpen] = useState(true);
+export default function MModal({ img, givenWidth, label }) {
+    const [open, setOpen] = useState(false);
 
     const handleModal = () => setOpen(!open);
 
+    useEffect(() => {
+        // console.log(localStorage.getItem(label));
+        if (localStorage.getItem(label)) {
+            return setOpen(false)
+        }
+        setOpen(true)
+    }, [])
+
+    const handleHideModal = () => {
+        localStorage.setItem(label, false)
+        setOpen(false)
+    }
 
     return (
         <div>
@@ -50,7 +62,7 @@ export default function MModal({img , givenWidth}) {
                     {/* <Typography id="modal-modal-description">
                         Your Excel file should be as shown below
                     </Typography> */}
-                    <ExcleMediaCard img={img} givenWidth={givenWidth} handle={handleModal}/>
+                    <ExcleMediaCard img={img} givenWidth={givenWidth} handle={handleHideModal} />
 
                 </Box>
             </Modal>

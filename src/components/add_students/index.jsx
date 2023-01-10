@@ -119,8 +119,8 @@ const AddStudents = () => {
                 autoComplete="off"
                 onSubmit={formik.handleSubmit}
             >
-                <MModal img={img} />
-                
+                <MModal img={img} label='add-students' />
+
                 <Typography variant="h6">Add Bulk of Students</Typography>
 
                 <AsyncSelect lists={lists} selectData={setCourse} label="Select Course" />

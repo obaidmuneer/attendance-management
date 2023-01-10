@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/system';
 
-export default function ExcleMediaCard({ img, givenWidth }) {
+export default function ExcleMediaCard({ img, givenWidth, handle }) {
     return (
         <Stack alignItems={'center'} >
             <Card raised sx={{ maxWidth: givenWidth || 550 }}>
@@ -26,10 +26,10 @@ export default function ExcleMediaCard({ img, givenWidth }) {
                         Your Excle file should be as shown in image
                     </Typography>
                 </CardContent>
-                {/* <CardActions>
-                <Button size="small">Ok</Button>
-                <Button size="small">Dont Show Again</Button>
-            </CardActions> */}
+                <CardActions>
+                {/* <Button size="small">OK</Button> */}
+                <Button onClick={handle} size="small">Dont Show Again</Button>
+            </CardActions>
             </Card>
         </Stack>
     );

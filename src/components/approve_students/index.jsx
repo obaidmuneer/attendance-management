@@ -115,7 +115,7 @@ const ApproveStudents = () => {
             alignItems: 'center',
             mt: 2
         }}>
-            <MModal img={img} givenWidth={340} />
+            <MModal img={img} givenWidth={340} label='approve-students' />
             <Typography variant="h6">Approve Bulk of Students</Typography>
             <Box
                 component="form"
