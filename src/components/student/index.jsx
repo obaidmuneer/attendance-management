@@ -15,6 +15,7 @@ const Student = () => {
   const { state, dispatch } = useContext(GlobalContext)
   const [roll, setRoll] = useState("");
   const [student, setStudent] = useState(null);
+  const [error, setError] = useState('')
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
@@ -28,11 +29,14 @@ const Student = () => {
           type: "student",
           payload: res.data.student
         })
-        navigate(`attendance/${roll}`)
+        // navigate(`attendance/${roll}`)
       })
       .catch((err) => {
-        console.error(err);
+        console.error(err.response.data.message);
+        setError(err.response.data.message)
       });
+    navigate(`attendance/${roll}`)
+
     console.log(student);
   };
 
@@ -77,7 +81,7 @@ const Student = () => {
           </Box>
         </Grid>
 
-        {student && student.isClassAssign && (
+        {(student && student.isClassAssign) ?
           <Grid item xs={'auto'}>
             <Link to={`profile/${student.roll}`} style={{ textDecoration: "inherit" }}>
               <MPopover msg={"Click to Update"} >
@@ -85,7 +89,7 @@ const Student = () => {
               </MPopover>
             </Link>
           </Grid>
-        )}
+          : error}
       </Grid>
       <Outlet />
     </div>

@@ -61,14 +61,14 @@ const Attendance = () => {
     axios
       .get(`${state.api}/attendance/${studentRoll}`)
       .then((res) => {
-        setLoading(false);
         setLoadedAttend(res.data.attendance);
       })
       .catch((err) => {
-        console.log(err)
-        setLoading(false);
+        console.log(err.response.data.message)
       });
-  }, [])
+    setLoading(false);
+
+  }, [studentRoll])
 
 
   const getClass = () => {
@@ -171,7 +171,7 @@ const Attendance = () => {
       {/* </div> */}
 
       <div>
-        {loadedAttend.length > 0 ? (
+        {loadedAttend?.length > 0 ? (
           <div>
             <h2>Student's Attendance Detail</h2>
             <MTable data={loadedAttend} columns={columns} height={440} />
