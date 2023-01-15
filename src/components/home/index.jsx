@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography'
 import Dashboard from "../dasboard"
 import MCard from '../../ui-components/mcard';
 import MSkeletonCard from "../../ui-components/mskeletoncard";
-import TeacherAssignedStudent from "../teacher_assigned_student";
 import { GlobalContext } from "../../context/context";
+import Claxxex from "../claxxex";
 
 
 const Home = () => {
@@ -18,9 +18,6 @@ const Home = () => {
     const [topStudents, setTopStudents] = useState([]);
     const [checkStudents, setCheckStudents] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [loadingClaxx, setLoadingClaxx] = useState(true);
-    const [claxxex, setClaxxex] = useState([]);
-
 
     useEffect(() => {
         axios.get(`${state.api}/attendance/top_std`)
@@ -29,21 +26,13 @@ const Home = () => {
                 setCheckStudents(res.data.checkStudents)
                 setLoading(false)
                 // console.log(res.data)
-
             })
-
-        axios.get(`${state.api}/classes`).then(res => {
-            // console.log(res.data.data)
-            setClaxxex(res.data.data)
-            setLoadingClaxx(false)
-        })
         // eslint-disable-next-line
     }, [])
 
     const loginHandler = () => {
         console.log('hi');
     }
-
 
     return (
         <div>
@@ -59,7 +48,7 @@ const Home = () => {
                 <Grid container
                     spacing={2}
                     direction="row"
-                    justifyContent="center"
+                    justifyContent="space-around"
                     alignItems="center" >
                     <Grid item xs={'auto'} >
                         {topStudents.length > 0 && <Typography variant='h5'> Top Students by Attendance</Typography>}
@@ -92,33 +81,7 @@ const Home = () => {
                 </Grid>
             </Box>}
 
-
-            {loadingClaxx ? <>
-                <MSkeletonCard arrLength={3} claxx={true} />
-                <MSkeletonCard arrLength={3} claxx={true} />
-            </> : <Box sx={{
-                flexGrow: 1,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                my: 2
-            }} >
-                <Typography variant="h5" >Classes</Typography>
-                <Grid container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center" >
-                    {
-                        claxxex.map((claxx, index) => {
-                            return <Grid xs={'auto'} sm={'auto'} md={'auto'} item key={index}>
-                                <TeacherAssignedStudent api={state.api} claxx={claxx} />
-                            </Grid>
-                        })
-                    }
-                </Grid>
-            </Box>}
+            <Claxxex />
 
         </div >
     )
