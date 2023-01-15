@@ -5,5 +5,16 @@ make resusable component {
     teacherAssignedComp = Modal
     AddStudents and Unapprove List more or less are same
 }
-make login for students
+make login for students = {
+    can select for desired section in first class
+    can submit application {
+        for leave 
+        for section change
+    }
+    can check his attendance record 
+    can check for his enrollment record
+    can check his test record
+    can check his certification
+}
 approved students can add themeselve into any section 
+add date filter in attendance component
