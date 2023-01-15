@@ -21,7 +21,6 @@ import ThemeSwitch from "../../themes/theme_switch"
 import MMenu from "../../ui-components/mmenu";
 import MMenuV2 from "../../ui-components/mmenuv2";
 
-
 const pages = [
   {
     path: "/home",
@@ -31,7 +30,7 @@ const pages = [
 
 const classSubPages = [
   {
-    path: "#",
+    path: "/classes",
     title: "All Classes",
   },
   {

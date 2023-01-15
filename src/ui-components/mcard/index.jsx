@@ -31,7 +31,7 @@ function stringAvatar(name) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: name.charAt(0).toUpperCase(),
+    children: name?.charAt(0).toUpperCase(),
     // children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
   };
 }
@@ -41,7 +41,7 @@ function mStringAvatar(name) {
     sx: {
       bgcolor: '#' + Math.floor(Math.random() * 16777215).toString(16)
     },
-    children: name.charAt(0).toUpperCase(),
+    children: name?.charAt(0).toUpperCase(),
   }
 }
 
@@ -84,7 +84,7 @@ export default function MCard({ student, claxx, handle }) {
                 alt="profile"
                 src={student?.picture?.link}
                 // {...stringAvatar((!student?.picture?.link || !claxx?.teacherPicture) && (student?.name || claxx.teacher))}
-                {...(!student?.picture?.link || !claxx?.teacherPicture) && { ...mStringAvatar(student?.name || claxx.teacher) }}
+                {...(!student?.picture?.link || !claxx?.teacherPicture) && { ...mStringAvatar(student?.name || claxx?.teacher) }}
               />
             </Grid>
           </Grid>

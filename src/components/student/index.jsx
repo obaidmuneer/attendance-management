@@ -34,6 +34,10 @@ const Student = () => {
       .catch((err) => {
         console.error(err.response.data.message);
         setError(err.response.data.message)
+        dispatch({
+          type: "student",
+          payload: null
+        })
       });
     navigate(`attendance/${roll}`)
 
@@ -81,11 +85,11 @@ const Student = () => {
           </Box>
         </Grid>
 
-        {(student && student.isClassAssign) ?
+        {(state.student) ?
           <Grid item xs={'auto'}>
-            <Link to={`profile/${student.roll}`} style={{ textDecoration: "inherit" }}>
+            <Link to={`profile/${state.student?.roll}`} style={{ textDecoration: "inherit" }}>
               <MPopover msg={"Click to Update"} >
-                <MCard student={student} />
+                <MCard student={state.student} />
               </MPopover>
             </Link>
           </Grid>

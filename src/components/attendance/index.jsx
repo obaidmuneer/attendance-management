@@ -24,6 +24,7 @@ const Attendance = () => {
   const [classData, setClassData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('')
   const { studentRoll } = useParams();
 
 
@@ -64,7 +65,7 @@ const Attendance = () => {
         setLoadedAttend(res.data.attendance);
       })
       .catch((err) => {
-        console.log(err.response.data.message)
+        setErr(err.response.data.message)
       });
     setLoading(false);
 
@@ -171,12 +172,12 @@ const Attendance = () => {
       {/* </div> */}
 
       <div>
-        {loadedAttend?.length > 0 ? (
+        {!err ? (
           <div>
             <h2>Student's Attendance Detail</h2>
             <MTable data={loadedAttend} columns={columns} height={440} />
           </div>
-        ) : "Something is wrong"}
+        ) : err}
       </div>
     </div>
   );
