@@ -37,7 +37,6 @@ export default function TeacherAssignedStudent({ api, claxx }) {
     const [students, setStudents] = useState([]);
     const [open, setOpen] = useState(false);
     const targetElement = document.querySelector('#card')
-    console.log(targetElement);
 
     const handleOpen = () => {
         setOpen(true)
@@ -51,7 +50,6 @@ export default function TeacherAssignedStudent({ api, claxx }) {
         setOpen(false)
         enableBodyScroll(targetElement)
     };
-
 
     return (
         <div>

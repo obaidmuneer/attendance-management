@@ -12,4 +12,16 @@ body{
   /* when parent is hovered */
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: .45rem;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(27, 27, 27, .4);
+}
+::-webkit-scrollbar-track{
+    background: rgba(196, 196, 196, 0.4);
+}
+
+
 
