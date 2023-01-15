@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
@@ -32,26 +33,33 @@ const columns = [
     { id: "course", label: "Course", minWidth: 120 },
 ];
 
-
 export default function TeacherAssignedStudent({ api, claxx }) {
     const [students, setStudents] = useState([]);
     const [open, setOpen] = useState(false);
+    const targetElement = document.querySelector('#card')
+    console.log(targetElement);
 
     const handleOpen = () => {
         setOpen(true)
         axios.get(`${api}/students/class/${claxx._id}`)
             .then(res => setStudents(res.data.students))
             .catch(err => console.log(err))
+        disableBodyScroll(targetElement);
     }
 
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false)
+        enableBodyScroll(targetElement)
+    };
 
 
     return (
         <div>
-            <MPopover msg={"Click to Show Student"} >
-                <MCard claxx={claxx} handle={handleOpen} />
-            </MPopover>
+            <div id='card' >
+                <MPopover msg={"Click to Show Student"} >
+                    <MCard claxx={claxx} handle={handleOpen} />
+                </MPopover>
+            </div>
             <Modal
                 open={open}
                 onClose={handleClose}
