@@ -7,6 +7,9 @@ import { Typography, Box, TextField } from "@mui/material";
 import sucessAudio from "../../assets/audio/sucess_beep.mp3";
 import { GlobalContext } from "../../context/context";
 import "./index.css";
+import MCard from "../../ui-components/mcard";
+import MModal from "../../ui-components/MModal";
+import guideGif from '../../assets/guide.gif'
 
 const Attendance = () => {
   const { state } = useContext(GlobalContext);
@@ -21,7 +24,6 @@ const Attendance = () => {
   };
 
   const handleAttendance = async (roll_num) => {
-    console.log(roll);
     try {
       const result = await axios.post(`${state.api}/attendance/${roll_num || roll}`, {
         marked_attendance: "present",
@@ -30,7 +32,11 @@ const Attendance = () => {
       console.log(result.data.msg);
       setMsg(result.data.msg);
       setStudent(result.data.student);
-      setRoll('')
+      new Audio(sucessAudio).play()
+      setTimeout(() => {
+        setRoll("");
+      }, 5000);
+
       //   setTimeout(() => {
       //     setStudent(null);
       //     setMsg(null);
@@ -53,6 +59,7 @@ const Attendance = () => {
     }, 500);
     return () => clearInterval(interval);
   }, []);
+
 
   return (
     <div className="container">
@@ -98,32 +105,28 @@ const Attendance = () => {
         <Typography variant="h5" >Please Show Your ID Card To Mark Your Attendance</Typography>
       )}
 
+      <MModal img={guideGif} label='guide'  />
+
+
       <div className="sub-container">
         <QrReader
           className="qrcode"
           onResult={(result, error) => {
             if (!!result) {
-              console.log(result.text);
-              new Audio(sucessAudio).play();
-              setRoll(+result?.text);
-              handleAttendance(+result?.text);
+              // console.log(result.text);
+              handleAttendance(+result?.text)
             }
 
             // if (!!error) {
             //     console.info(error);
             // }
           }}
-          scanDelay={"500"}
+          scanDelay={"5000"}
         />
 
-        {student?.isClassAssign ? (
-          <div className="card">
-            <p>Student Name : {student?.name}</p>
-            <p>Roll : {student?.roll}</p>
-            <p>Attandance Time : {moment(Date.now()).format("MMM Do YY")}</p>
-            <p>Course : {student?.course}</p>
-          </div>
-        ) : null}
+        {
+          student && <MCard student={student} />
+        }
       </div>
 
       {msg && (

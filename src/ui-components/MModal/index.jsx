@@ -14,11 +14,11 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '70%',
+    width: '50%',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    p: 2,
 };
 
 
@@ -45,24 +45,17 @@ export default function MModal({ img, givenWidth, label }) {
             <Modal
                 open={open}
                 onClose={handleModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
             >
-
                 <Box sx={style}>
                     <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
-                            How to Upload File
+                            {label !== 'guide' && 'How to Upload File'}
                         </Typography>
                         <IconButton onClick={handleModal}>
                             <CloseIcon />
                         </IconButton>
                     </Stack>
-
-                    {/* <Typography id="modal-modal-description">
-                        Your Excel file should be as shown below
-                    </Typography> */}
-                    <ExcleMediaCard img={img} givenWidth={givenWidth} handle={handleHideModal} />
+                    <ExcleMediaCard img={img} label={label} givenWidth={givenWidth} handle={handleHideModal} />
 
                 </Box>
             </Modal>

@@ -7,14 +7,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/system';
 
-export default function ExcleMediaCard({ img, givenWidth, handle }) {
+export default function ExcleMediaCard({ img, label, givenWidth, handle }) {
     return (
         <Stack alignItems={'center'} >
             <Card raised sx={{ maxWidth: givenWidth || 550 }}>
                 <CardMedia
                     component="img"
                     alt="guide pic"
-                    height="150"
+                    height={label === 'guide' ? "200" : "150"}
                     image={img}
 
                 />
@@ -23,13 +23,13 @@ export default function ExcleMediaCard({ img, givenWidth, handle }) {
                     Guide
                 </Typography> */}
                     <Typography variant="body2" color="text.secondary">
-                        Your Excle file should be as shown in image
+                        {label !== 'guide' && ' Your Excle file should be as shown in image'}
                     </Typography>
                 </CardContent>
                 <CardActions>
-                {/* <Button size="small">OK</Button> */}
-                <Button onClick={handle} size="small">Dont Show Again</Button>
-            </CardActions>
+                    {/* <Button size="small">OK</Button> */}
+                    <Button onClick={handle} size="small">Dont Show Again</Button>
+                </CardActions>
             </Card>
         </Stack>
     );
